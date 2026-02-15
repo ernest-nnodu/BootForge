@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Min;
 public record ServerConfigRequest(
         @Min(1)
         @Max(65535)
-        int port,
+        Integer port,
 
         String contextPath
 ) {
