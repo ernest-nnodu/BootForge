@@ -15,19 +15,19 @@ public class YamlFormatter implements ConfigFormatter {
                   %s
                  \s
                   datasource:
-                  # ----------Database Configuration----------#
+                # ----------Database Configuration----------#
                     %s
                    \s
-                  # ----------Hikari Configuration----------#
+                # ----------Hikari Configuration----------#
                     %s
-                  # ----------JPA Configuration----------#
-                    %s
+                # ----------JPA Configuration----------#
+                  %s
                \s"""
                 .formatted(
                         formatApplicationConfig(configuration.applicationConfig()),
                         formatDatabaseConfig(configuration.databaseConfig()),
-                        formatHikariConfig(configuration.hikariConfig())
-                        //formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType())
+                        formatHikariConfig(configuration.hikariConfig()),
+                        formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType())
                 );
     }
 
@@ -80,6 +80,26 @@ public class YamlFormatter implements ConfigFormatter {
                         hikariConfig.maximumPoolSize(),
                         hikariConfig.minimumIdle(),
                         hikariConfig.connectionTimeout()
+                );
+    }
+
+    private String formatJpaConfig(JpaConfig jpaConfig, DatabaseType databaseType) {
+
+        return """
+                jpa:
+                  hibernate:
+                    ddl-auto:%s
+                  database:
+                    platform:%s
+                  show-sql:%s
+                  open-in-view:%s
+                 \s
+               \s"""
+                .formatted(
+                        jpaConfig.ddlAuto(),
+                        FormatterUtil.generateSQLDialect(databaseType),
+                        jpaConfig.showSql(),
+                        jpaConfig.openInView()
                 );
     }
 }
