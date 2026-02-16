@@ -24,13 +24,15 @@ public class YamlFormatter implements ConfigFormatter {
                   %s
                 # ----------Server Configuration----------#
                 %s
+                %s
                \s"""
                 .formatted(
                         formatApplicationConfig(configuration.applicationConfig()),
                         formatDatabaseConfig(configuration.databaseConfig()),
                         formatHikariConfig(configuration.hikariConfig()),
                         formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType()),
-                        formatServerConfig(configuration.serverConfig())
+                        formatServerConfig(configuration.serverConfig()),
+                        formatLoggingConfig(configuration.loggingConfig())
                 );
     }
 
@@ -118,6 +120,21 @@ public class YamlFormatter implements ConfigFormatter {
                 .formatted(
                         serverConfig.port(),
                         serverConfig.contextPath()
+                );
+    }
+
+    private String formatLoggingConfig(LoggingConfig loggingConfig) {
+
+        return """
+                logging:
+                  level:
+                    root:%s
+                    org.springframework:%s
+                   \s
+               \s"""
+                .formatted(
+                        loggingConfig.rootLevel(),
+                        loggingConfig.springLevel()
                 );
     }
 }
