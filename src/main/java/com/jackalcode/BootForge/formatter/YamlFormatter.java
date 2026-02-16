@@ -22,12 +22,15 @@ public class YamlFormatter implements ConfigFormatter {
                     %s
                 # ----------JPA Configuration----------#
                   %s
+                # ----------Server Configuration----------#
+                %s
                \s"""
                 .formatted(
                         formatApplicationConfig(configuration.applicationConfig()),
                         formatDatabaseConfig(configuration.databaseConfig()),
                         formatHikariConfig(configuration.hikariConfig()),
-                        formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType())
+                        formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType()),
+                        formatServerConfig(configuration.serverConfig())
                 );
     }
 
@@ -100,6 +103,21 @@ public class YamlFormatter implements ConfigFormatter {
                         FormatterUtil.generateSQLDialect(databaseType),
                         jpaConfig.showSql(),
                         jpaConfig.openInView()
+                );
+    }
+
+    private String formatServerConfig(ServerConfig serverConfig) {
+
+        return """
+                server:
+                  port:%d
+                  servlet:
+                    context-path:%s
+                   \s
+               \s"""
+                .formatted(
+                        serverConfig.port(),
+                        serverConfig.contextPath()
                 );
     }
 }
