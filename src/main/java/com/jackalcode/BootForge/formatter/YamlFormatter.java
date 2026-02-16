@@ -24,6 +24,9 @@ public class YamlFormatter implements ConfigFormatter {
                   %s
                 # ----------Server Configuration----------#
                 %s
+                # ----------Logging Configuration----------#
+                %s
+                # ----------Actuator Configuration----------#
                 %s
                \s"""
                 .formatted(
@@ -32,7 +35,8 @@ public class YamlFormatter implements ConfigFormatter {
                         formatHikariConfig(configuration.hikariConfig()),
                         formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType()),
                         formatServerConfig(configuration.serverConfig()),
-                        formatLoggingConfig(configuration.loggingConfig())
+                        formatLoggingConfig(configuration.loggingConfig()),
+                        formatActuatorConfig(configuration.actuatorConfig())
                 );
     }
 
@@ -135,6 +139,25 @@ public class YamlFormatter implements ConfigFormatter {
                 .formatted(
                         loggingConfig.rootLevel(),
                         loggingConfig.springLevel()
+                );
+    }
+
+    private String formatActuatorConfig(ActuatorConfig actuatorConfig) {
+
+        return """
+                management:
+                  endpoints:
+                    web:
+                      exposure:
+                        include: %s
+                  endpoint:
+                    health:
+                      show-details: %s
+                     \s
+               \s"""
+                .formatted(
+                        actuatorConfig.exposedEndpoints(),
+                        actuatorConfig.showHealthDetails()
                 );
     }
 }
