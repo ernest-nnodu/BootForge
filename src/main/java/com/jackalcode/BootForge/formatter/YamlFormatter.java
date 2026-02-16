@@ -1,8 +1,7 @@
 package com.jackalcode.BootForge.formatter;
 
-import com.jackalcode.BootForge.domain.model.ApplicationConfig;
-import com.jackalcode.BootForge.domain.model.Configuration;
-import com.jackalcode.BootForge.domain.model.DatabaseConfig;
+import com.jackalcode.BootForge.domain.enums.DatabaseType;
+import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.formatter.util.FormatterUtil;
 
 public class YamlFormatter implements ConfigFormatter {
@@ -12,13 +11,23 @@ public class YamlFormatter implements ConfigFormatter {
 
         return """
                 spring:
+                # ----------Application Configuration----------#
                   %s
                  \s
-                  %s
+                  datasource:
+                  # ----------Database Configuration----------#
+                    %s
+                   \s
+                  # ----------Hikari Configuration----------#
+                    %s
+                  # ----------JPA Configuration----------#
+                    %s
                \s"""
                 .formatted(
                         formatApplicationConfig(configuration.applicationConfig()),
-                        formatDatabaseConfig(configuration.databaseConfig())
+                        formatDatabaseConfig(configuration.databaseConfig()),
+                        formatHikariConfig(configuration.hikariConfig())
+                        //formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType())
                 );
     }
 
@@ -41,7 +50,6 @@ public class YamlFormatter implements ConfigFormatter {
     private String formatDatabaseConfig(DatabaseConfig databaseConfig) {
 
         return """
-                  datasource:
                     url:%s
                     username:%s
                     password:%s
@@ -56,6 +64,22 @@ public class YamlFormatter implements ConfigFormatter {
                         ),
                         databaseConfig.username(),
                         databaseConfig.password()
+                );
+    }
+
+    private String formatHikariConfig(HikariConfig hikariConfig) {
+
+        return """
+                  hikari:
+                    maximum-pool-size:%d
+                    minimum-idle:%d
+                    connection-timeout:%d
+                   \s
+               \s"""
+                .formatted(
+                        hikariConfig.maximumPoolSize(),
+                        hikariConfig.minimumIdle(),
+                        hikariConfig.connectionTimeout()
                 );
     }
 }
