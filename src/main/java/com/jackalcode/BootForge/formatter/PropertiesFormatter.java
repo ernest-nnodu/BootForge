@@ -2,6 +2,7 @@ package com.jackalcode.BootForge.formatter;
 
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
 import com.jackalcode.BootForge.domain.model.*;
+import com.jackalcode.BootForge.formatter.util.FormatterUtil;
 
 public class PropertiesFormatter implements ConfigFormatter {
 
@@ -70,7 +71,7 @@ public class PropertiesFormatter implements ConfigFormatter {
                 
                 """
                 .formatted(
-                        generateDatasourceUrl(
+                        FormatterUtil.generateDatasourceUrl(
                                 databaseConfig.databaseType(),
                                 databaseConfig.databaseName(),
                                 databaseConfig.host(),
@@ -78,28 +79,8 @@ public class PropertiesFormatter implements ConfigFormatter {
                         ),
                         databaseConfig.username(),
                         databaseConfig.password(),
-                        generateSQLDialect(databaseConfig.databaseType())
+                        FormatterUtil.generateSQLDialect(databaseConfig.databaseType())
                 );
-    }
-
-    private String generateDatasourceUrl(
-            DatabaseType databaseType, String databaseName, String host, Integer port) {
-
-        return String.format(
-                "jdbc:%s://%s:%d/%s",
-                databaseType.toString().toLowerCase(),
-                host,
-                port,
-                databaseName
-        );
-    }
-
-    private String generateSQLDialect(DatabaseType databaseType) {
-
-        return switch (databaseType) {
-            case DatabaseType.MYSQL -> "MySQLDialect";
-            case DatabaseType.POSTGRESQL -> "PostgreSQLDialect";
-        };
     }
 
     private String formatJpaConfig(JpaConfig jpaConfig) {
