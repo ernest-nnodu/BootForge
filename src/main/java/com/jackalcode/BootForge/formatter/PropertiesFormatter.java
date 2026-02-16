@@ -26,7 +26,7 @@ public class PropertiesFormatter implements ConfigFormatter {
                         formatApplicationConfig(configuration.applicationConfig()),
                         formatServerConfig(configuration.serverConfig()),
                         formatDatabaseConfig(configuration.databaseConfig()),
-                        formatJpaConfig(configuration.jpaConfig()),
+                        formatJpaConfig(configuration.jpaConfig(), configuration.databaseConfig().databaseType()),
                         formatHikariConfig(configuration.hikariConfig()),
                         formatLoggingConfig(configuration.loggingConfig()),
                         formatActuatorConfig(configuration.actuatorConfig())
@@ -67,7 +67,6 @@ public class PropertiesFormatter implements ConfigFormatter {
                 spring.datasource.url=%s
                 spring.datasource.username=%s
                 spring.datasource.password=%s
-                spring.jpa.database-platform=org.hibernate.dialect.%s
                 
                 """
                 .formatted(
@@ -78,22 +77,23 @@ public class PropertiesFormatter implements ConfigFormatter {
                                 databaseConfig.port()
                         ),
                         databaseConfig.username(),
-                        databaseConfig.password(),
-                        FormatterUtil.generateSQLDialect(databaseConfig.databaseType())
+                        databaseConfig.password()
                 );
     }
 
-    private String formatJpaConfig(JpaConfig jpaConfig) {
+    private String formatJpaConfig(JpaConfig jpaConfig, DatabaseType databaseType) {
 
         return """
                 #----------JPA Configuration----------#
                 spring.jpa.hibernate.ddl-auto=%s
+                spring.jpa.database-platform=org.hibernate.dialect.%s
                 spring.jpa.show-sql=%s
                 spring.jpa.open-in-view=%s
                 
                 """
                 .formatted(
                         jpaConfig.ddlAuto().toString().toLowerCase(),
+                        FormatterUtil.generateSQLDialect(databaseType),
                         jpaConfig.showSql(),
                         jpaConfig.openInView()
                 );
