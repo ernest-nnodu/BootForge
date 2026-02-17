@@ -2,7 +2,9 @@ package com.jackalcode.BootForge.mapper;
 
 import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ConfigurationMapper {
 
     public Configuration toDomain(GenerateConfigRequest configRequest) {

@@ -3,7 +3,9 @@ package com.jackalcode.BootForge.formatter;
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
 import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.formatter.util.FormatterUtil;
+import org.springframework.stereotype.Component;
 
+@Component
 public class YamlFormatter implements ConfigFormatter {
 
     @Override
