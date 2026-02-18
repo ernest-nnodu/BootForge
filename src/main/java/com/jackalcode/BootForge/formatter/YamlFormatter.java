@@ -159,7 +159,7 @@ public class YamlFormatter implements ConfigFormatter {
                \s"""
                 .formatted(
                         actuatorConfig.exposedEndpoints(),
-                        actuatorConfig.showHealthDetails()
+                        actuatorConfig.showHealthDetails().toString().toLowerCase()
                 );
     }
 }

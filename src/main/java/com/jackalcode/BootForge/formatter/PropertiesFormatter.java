@@ -141,7 +141,7 @@ public class PropertiesFormatter implements ConfigFormatter {
                 """
                 .formatted(
                         actuatorConfig.exposedEndpoints(),
-                        actuatorConfig.showHealthDetails()
+                        actuatorConfig.showHealthDetails().toString().toLowerCase()
                 );
     }
 }
