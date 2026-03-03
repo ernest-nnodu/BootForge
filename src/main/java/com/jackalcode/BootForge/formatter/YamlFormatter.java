@@ -1,9 +1,13 @@
 package com.jackalcode.BootForge.formatter;
 
-import com.jackalcode.BootForge.domain.enums.DatabaseType;
 import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.formatter.util.FormatterUtil;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Component
 public class YamlFormatter implements ConfigFormatter {
@@ -12,140 +16,115 @@ public class YamlFormatter implements ConfigFormatter {
 
     @Override
     public String format(Configuration configuration) {
+        Map<String, Object> yamlStructure = toYamlMap(configuration);
 
-        StringBuilder yaml = new StringBuilder();
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setPrettyFlow(true);
+        options.setIndent(2);
 
-        yaml.append("spring:\n");
+        Yaml yaml = new Yaml(options);
 
-        // ---- Application ----
-        yaml.append(indent(formatApplicationConfig(configuration.applicationConfig()), 1));
-
-        // ---- Datasource ----
-        yaml.append(indent("datasource:\n", 1));
-        yaml.append(indent(formatDatabaseConfig(configuration.databaseConfig()), 2));
-        yaml.append(indent(formatHikariConfig(configuration.hikariConfig()), 2));
-
-        // ---- JPA ----
-        yaml.append(indent(formatJpaConfig(
-                configuration.jpaConfig(),
-                configuration.databaseConfig().databaseType()
-        ), 1));
-
-        // ---- Server ----
-        yaml.append(formatServerConfig(configuration.serverConfig()));
-
-        // ---- Logging ----
-        yaml.append(formatLoggingConfig(configuration.loggingConfig()));
-
-        // ---- Actuator ----
-        yaml.append(formatActuatorConfig(configuration.actuatorConfig()));
-
-        return yaml.toString();
+        return yaml.dump(yamlStructure);
     }
 
-    private String formatApplicationConfig(ApplicationConfig config) {
-        return """
-application:
-  name: %s
-  profiles:
-    active: %s
-""".formatted(
-                config.applicationName(),
-                config.activeProfile()
-        );
-    }
+    private Map<String, Object> toYamlMap(Configuration config) {
 
-    private String formatDatabaseConfig(DatabaseConfig config) {
-        return """
-url: %s
-username: %s
-password: %s
-""".formatted(
+        Map<String, Object> root = new LinkedHashMap<>();
+
+        // ---- SPRING ----
+        Map<String, Object> spring = new LinkedHashMap<>();
+        root.put("spring", spring);
+
+        // Application
+        Map<String, Object> application = new LinkedHashMap<>();
+        application.put("name", config.applicationConfig().applicationName());
+
+        Map<String, Object> profiles = new LinkedHashMap<>();
+        profiles.put("active", config.applicationConfig().activeProfile());
+
+        spring.put("application", application);
+        spring.put("profiles", profiles);
+
+        // Datasource
+        Map<String, Object> datasource = new LinkedHashMap<>();
+        datasource.put("url",
                 FormatterUtil.generateDatasourceUrl(
-                        config.databaseType(),
-                        config.databaseName(),
-                        config.host(),
-                        config.port()
-                ),
-                config.username(),
-                config.password()
+                        config.databaseConfig().databaseType(),
+                        config.databaseConfig().databaseName(),
+                        config.databaseConfig().host(),
+                        config.databaseConfig().port()
+                )
         );
+        datasource.put("username", config.databaseConfig().username());
+        datasource.put("password", config.databaseConfig().password());
+
+        // Hikari
+        Map<String, Object> hikari = new LinkedHashMap<>();
+        hikari.put("maximum-pool-size", config.hikariConfig().maximumPoolSize());
+        hikari.put("minimum-idle", config.hikariConfig().minimumIdle());
+        hikari.put("connection-timeout", config.hikariConfig().connectionTimeout());
+
+        datasource.put("hikari", hikari);
+        spring.put("datasource", datasource);
+
+        // JPA
+        Map<String, Object> jpa = new LinkedHashMap<>();
+        Map<String, Object> hibernate = new LinkedHashMap<>();
+        hibernate.put("ddl-auto", config.jpaConfig().ddlAuto().toString().toLowerCase());
+
+        Map<String, Object> database = new LinkedHashMap<>();
+        database.put("platform",
+                FormatterUtil.generateSQLDialect(config.databaseConfig().databaseType()));
+
+        jpa.put("hibernate", hibernate);
+        jpa.put("database", database);
+        jpa.put("show-sql", config.jpaConfig().showSql());
+        jpa.put("open-in-view", config.jpaConfig().openInView());
+
+        spring.put("jpa", jpa);
+
+        // ---- SERVER ----
+        Map<String, Object> server = new LinkedHashMap<>();
+        server.put("port", config.serverConfig().port());
+
+        Map<String, Object> servlet = new LinkedHashMap<>();
+        servlet.put("context-path", config.serverConfig().contextPath());
+        server.put("servlet", servlet);
+
+        root.put("server", server);
+
+        // ---- LOGGING ----
+        Map<String, Object> logging = new LinkedHashMap<>();
+        Map<String, Object> level = new LinkedHashMap<>();
+        level.put("root", config.loggingConfig().rootLevel().toString().toLowerCase());
+        level.put("org.springframework", config.loggingConfig().springLevel().toString().toLowerCase());
+        logging.put("level", level);
+
+        root.put("logging", logging);
+
+        // ---- ACTUATOR ----
+        Map<String, Object> management = new LinkedHashMap<>();
+        Map<String, Object> endpoints = new LinkedHashMap<>();
+        Map<String, Object> web = new LinkedHashMap<>();
+        Map<String, Object> exposure = new LinkedHashMap<>();
+
+        exposure.put("include", config.actuatorConfig().exposedEndpoints());
+        web.put("exposure", exposure);
+        endpoints.put("web", web);
+
+        Map<String, Object> endpoint = new LinkedHashMap<>();
+        Map<String, Object> health = new LinkedHashMap<>();
+        health.put("show-details", config.actuatorConfig().showHealthDetails().toString().toLowerCase());
+
+        endpoint.put("health", health);
+
+        management.put("endpoints", endpoints);
+        management.put("endpoint", endpoint);
+
+        root.put("management", management);
+
+        return root;
     }
 
-    private String formatHikariConfig(HikariConfig config) {
-        return """
-hikari:
-  maximum-pool-size: %d
-  minimum-idle: %d
-  connection-timeout: %d
-""".formatted(
-                config.maximumPoolSize(),
-                config.minimumIdle(),
-                config.connectionTimeout()
-        );
-    }
-
-    private String formatJpaConfig(JpaConfig config, DatabaseType databaseType) {
-        return """
-jpa:
-  hibernate:
-    ddl-auto: %s
-  database:
-    platform: %s
-  show-sql: %s
-  open-in-view: %s
-""".formatted(
-                config.ddlAuto().toString().toLowerCase(),
-                FormatterUtil.generateSQLDialect(databaseType),
-                config.showSql(),
-                config.openInView()
-        );
-    }
-
-    private String formatServerConfig(ServerConfig config) {
-        return """
-server:
-  port: %d
-  servlet:
-    context-path: %s
-""".formatted(
-                config.port(),
-                config.contextPath()
-        );
-    }
-
-    private String formatLoggingConfig(LoggingConfig config) {
-        return """
-logging:
-  level:
-    root: %s
-    org.springframework: %s
-""".formatted(
-                config.rootLevel().toString().toLowerCase(),
-                config.springLevel().toString().toLowerCase()
-        );
-    }
-
-    private String formatActuatorConfig(ActuatorConfig config) {
-        return """
-management:
-  endpoints:
-    web:
-      exposure:
-        include: %s
-  endpoint:
-    health:
-      show-details: %s
-""".formatted(
-                config.exposedEndpoints(),
-                config.showHealthDetails().toString().toLowerCase()
-        );
-    }
-
-    private String indent(String block, int level) {
-        String prefix = INDENT.repeat(level);
-        return block.lines()
-                .map(line -> line.isBlank() ? line : prefix + line)
-                .reduce("", (a, b) -> a + b + "\n");
-    }
 }
