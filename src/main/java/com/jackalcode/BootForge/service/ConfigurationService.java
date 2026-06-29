@@ -24,17 +24,12 @@ public class ConfigurationService {
 
     public String generateConfiguration(GenerateConfigRequest configRequest) {
 
+        Configuration config = configurationMapper.toDomain(configRequest);
         String configuration;
 
        switch (configRequest.outputFormat()) {
-            case PROPERTIES -> {
-                Configuration config = configurationMapper.toDomain(configRequest);
-                configuration = propertiesFormatter.format(config);
-            }
-            case YAML -> {
-                Configuration config = configurationMapper.toDomain(configRequest);
-                configuration = yamlFormatter.format(config);
-            }
+            case PROPERTIES -> configuration = propertiesFormatter.format(config);
+            case YAML -> configuration = yamlFormatter.format(config);
             default -> throw new IllegalArgumentException("Format not supported");
         }
 
