@@ -1,4 +1,4 @@
-package com.jackalcode.BootForge.dto;
+package com.jackalcode.BootForge.domain.enums;
 
 public enum OutputFormat {
     PROPERTIES,

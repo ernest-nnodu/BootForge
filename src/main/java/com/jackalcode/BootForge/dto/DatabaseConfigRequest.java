@@ -7,20 +7,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record DatabaseConfigRequest(
-        @NotNull
+        @NotNull(message = "Database type must not be null")
         DatabaseType databaseType,
 
-        @NotBlank
+        @NotBlank(message = "Username must not be blank")
         String username,
 
-        @NotBlank
+        @NotBlank(message = "Password must not be blank")
         String password,
 
         String host,
         String databaseName,
 
-        @Min(1)
-        @Max(65535)
+        @Min(value = 1, message = "Port must be greater than or equal to 1")
+        @Max(value = 65535, message = "Port must be less than or equal to 65535")
         Integer port
 ) {
 }

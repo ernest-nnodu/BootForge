@@ -4,8 +4,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
 public record ServerConfigRequest(
-        @Min(1)
-        @Max(65535)
+        @Min(value = 1, message = "Port number must be greater than 0")
+        @Max(value = 65535, message = "Port number must be less than or equal to 65535")
         Integer port,
 
         String contextPath
