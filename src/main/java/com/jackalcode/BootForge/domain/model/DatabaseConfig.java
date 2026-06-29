@@ -25,8 +25,8 @@ public record DatabaseConfig(
             throw new IllegalArgumentException("Password is required");
         }
 
-        if (port < 1 || port > 65535) {
-            throw new IllegalArgumentException("Port must be between 1 and 65535");
+        if (port == null || port < 1 || port > 65535) {
+            port = resolveDefaultPort(databaseType);
         }
 
         this.databaseType = databaseType;
@@ -34,7 +34,7 @@ public record DatabaseConfig(
         this.password = password;
         this.host = (host == null || host.isBlank()) ? "localhost" : host;
         this.databaseName = (databaseName == null || databaseName.isBlank()) ? "app_db" : databaseName;
-        this.port = port == null ? resolveDefaultPort(databaseType) : port;
+        this.port = port;
     }
 
     private Integer resolveDefaultPort(DatabaseType databaseType) {
