@@ -1,6 +1,7 @@
 package com.jackalcode.BootForge.mapper;
 
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
+import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.dto.*;
 
 public class TestDataFactory {

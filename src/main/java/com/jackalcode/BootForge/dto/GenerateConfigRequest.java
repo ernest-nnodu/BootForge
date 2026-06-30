@@ -1,21 +1,21 @@
 package com.jackalcode.BootForge.dto;
 
-import com.jackalcode.BootForge.domain.model.*;
+import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 public record GenerateConfigRequest(
 
         @Valid
-        @NotNull
+        @NotNull(message = "Application configuration is required")
         ApplicationConfigRequest applicationConfigRequest,
 
         @Valid
-        @NotNull
+        @NotNull(message = "Server configuration is required")
         ServerConfigRequest serverConfigRequest,
 
         @Valid
-        @NotNull
+        @NotNull(message = "Database configuration is required")
         DatabaseConfigRequest databaseConfigRequest,
 
         @Valid
@@ -30,6 +30,7 @@ public record GenerateConfigRequest(
         @Valid
         ActuatorConfigRequest actuatorConfigRequest,
 
+        @NotNull(message = "Output format is required")
         OutputFormat outputFormat
 ) {
 }
