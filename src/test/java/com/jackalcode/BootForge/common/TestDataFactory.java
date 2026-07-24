@@ -1,10 +1,27 @@
-package com.jackalcode.BootForge.mapper;
+package com.jackalcode.BootForge.common;
 
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
 import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.dto.*;
+import com.jackalcode.BootForge.mapper.RequestProps;
 
 public class TestDataFactory {
+
+    public static GenerateConfigRequest generateConfigRequest(RequestProps requestProps) {
+
+        return new GenerateConfigRequest(
+                new ApplicationConfigRequest(requestProps.getApplicationName(), requestProps.getActiveProfile()),
+                new ServerConfigRequest(requestProps.getServerPort(), requestProps.getContextPath()),
+                new DatabaseConfigRequest(requestProps.getDatabaseType(), requestProps.getUsername(),
+                        requestProps.getPassword(), requestProps.getHost(), requestProps.getDatabaseName(),
+                        requestProps.getDatabasePort()),
+                new JpaConfigRequest(requestProps.getDdlAuto(), requestProps.getShowSql(), requestProps.getOpenInView()),
+                new HikariConfigRequest(requestProps.getMaximumPoolSize(), requestProps.getMinimumIdle(), requestProps.getConnectionTimeout()),
+                new LoggingConfigRequest(requestProps.getRootLevel(), requestProps.getSpringLevel()),
+                new ActuatorConfigRequest(requestProps.getExposedEndpoints(), requestProps.getShowHealthDetails()),
+                requestProps.getOutputFormat()
+        );
+    }
 
     public static GenerateConfigRequest validRequest() {
 

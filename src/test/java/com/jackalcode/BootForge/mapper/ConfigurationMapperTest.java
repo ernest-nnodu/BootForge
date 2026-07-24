@@ -1,5 +1,6 @@
 package com.jackalcode.BootForge.mapper;
 
+import com.jackalcode.BootForge.common.TestDataFactory;
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
 import com.jackalcode.BootForge.domain.model.Configuration;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
