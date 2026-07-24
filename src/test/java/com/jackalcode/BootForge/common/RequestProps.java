@@ -1,4 +1,4 @@
-package com.jackalcode.BootForge.mapper;
+package com.jackalcode.BootForge.common;
 
 import com.jackalcode.BootForge.domain.enums.*;
 import lombok.Builder;
