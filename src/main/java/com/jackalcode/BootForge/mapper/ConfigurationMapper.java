@@ -22,7 +22,7 @@ public class ConfigurationMapper {
 
     private ActuatorConfig mapActuator(ActuatorConfigRequest actuatorConfigRequest) {
 
-        //If request is null, domain model will set default values
+        //If the request is null, the domain model will set default values
         if (actuatorConfigRequest == null) {
             return new ActuatorConfig(null, null);
         }
@@ -35,7 +35,7 @@ public class ConfigurationMapper {
 
     private LoggingConfig mapLogging(LoggingConfigRequest loggingConfigRequest) {
 
-        //If request is null, domain model will set default values
+        //If the request is null, the domain model will set default values
         if (loggingConfigRequest == null) {
             return new LoggingConfig(null, null);
         }
@@ -48,7 +48,7 @@ public class ConfigurationMapper {
 
     private HikariConfig mapHikari(HikariConfigRequest hikariConfigRequest) {
 
-        //If request is null, domain model will set default values
+        //If the request is null, the domain model will set default values
         if (hikariConfigRequest == null) {
             return new HikariConfig(null, null, null);
         }
@@ -62,7 +62,7 @@ public class ConfigurationMapper {
 
     private JpaConfig mapJpa(JpaConfigRequest jpaConfigRequest) {
 
-        //If request is null, domain model will set default values
+        //If the request is null, the domain model will set default values
         if (jpaConfigRequest == null) {
             return new JpaConfig(null, null, null);
         }
