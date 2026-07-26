@@ -17,11 +17,11 @@ public record DatabaseConfig(
             throw new IllegalArgumentException("Database type is required");
         }
 
-        if (username == null) {
+        if (username == null || username.isBlank()) {
             throw new IllegalArgumentException("Username is required");
         }
 
-        if (password == null) {
+        if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("Password is required");
         }
 

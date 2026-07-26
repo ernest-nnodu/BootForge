@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConfigurationMapper {
 
-    public Configuration toDomain(GenerateConfigRequest configRequest) {
+    public Configuration toConfiguration(GenerateConfigRequest configRequest) {
 
         return new Configuration(
                 mapApplication(configRequest.applicationConfigRequest()),
