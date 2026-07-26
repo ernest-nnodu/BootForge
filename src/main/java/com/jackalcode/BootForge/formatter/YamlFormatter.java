@@ -12,8 +12,6 @@ import java.util.Map;
 @Component
 public class YamlFormatter implements ConfigFormatter {
 
-    private static final String INDENT = "  ";
-
     @Override
     public String format(Configuration configuration) {
         Map<String, Object> yamlStructure = toYamlMap(configuration);
@@ -48,14 +46,7 @@ public class YamlFormatter implements ConfigFormatter {
 
         // Datasource
         Map<String, Object> datasource = new LinkedHashMap<>();
-        datasource.put("url",
-                FormatterUtil.generateDatasourceUrl(
-                        config.databaseConfig().databaseType(),
-                        config.databaseConfig().databaseName(),
-                        config.databaseConfig().host(),
-                        config.databaseConfig().port()
-                )
-        );
+        datasource.put("url", config.databaseConfig().getUrl());
         datasource.put("username", config.databaseConfig().username());
         datasource.put("password", config.databaseConfig().password());
 
