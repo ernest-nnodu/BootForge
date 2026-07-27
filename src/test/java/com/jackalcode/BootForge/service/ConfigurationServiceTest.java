@@ -50,26 +50,81 @@ public class ConfigurationServiceTest {
         var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(requestProps);
         var configuration = ConfigurationTestHelper.toConfiguration(configRequest);
 
-        String expectedOutput = """
+        String expectedProperties = """
                 spring.application.name=boot-forge
                 server.port=8080
+                spring.datasource.username=test-user
+                spring.datasource.password=password
+                spring.datasource.url=jdbc:postgresql://test-host:5555/test-db
                 """;
 
         when(configurationMapper.toConfiguration(configRequest))
                 .thenReturn(configuration);
 
         when(propertiesFormatter.format(configuration))
-                .thenReturn(expectedOutput);
+                .thenReturn(expectedProperties);
 
         String result = configurationService.generateConfiguration(configRequest);
 
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(expectedOutput);
+        assertThat(result).isEqualTo(expectedProperties);
 
         verify(configurationMapper).toConfiguration(configRequest);
         verify(propertiesFormatter).format(configuration);
         verifyNoInteractions(yamlFormatter);
+    }
 
+    @Test
+    @DisplayName("generateConfiguration generates yaml configuration when output format is yaml")
+    void generateConfiguration_whenOutputFormatIsYaml_shouldReturnYaml() {
 
+        var requestProps = RequestProps.builder()
+                .applicationName("test-app")
+                .serverPort(8080)
+                .databaseName("test-db")
+                .username("test-user")
+                .password("password")
+                .databaseType(DatabaseType.POSTGRESQL)
+                .databasePort(5555)
+                .outputFormat(OutputFormat.YAML)
+                .build();
+        var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(requestProps);
+        var configuration = ConfigurationTestHelper.toConfiguration(configRequest);
+
+        String expectedYaml = """
+        spring:
+          application:
+            name: bootforge
+
+          datasource:
+            url: jdbc:postgresql://localhost:5432/bootforge_db
+            username: postgres
+            password: password
+
+          jpa:
+            database-platform: org.hibernate.dialect.PostgreSQLDialect
+            show-sql: true
+            open-in-view: false
+
+            hibernate:
+              ddl-auto: validate
+
+        server:
+          port: 8080
+        """;
+
+        when(configurationMapper.toConfiguration(configRequest))
+                .thenReturn(configuration);
+        when(yamlFormatter.format(configuration))
+                .thenReturn(expectedYaml);
+
+        var result = configurationService.generateConfiguration(configRequest);
+
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(expectedYaml);
+
+        verify(configurationMapper).toConfiguration(configRequest);
+        verify(yamlFormatter).format(configuration);
+        verifyNoInteractions(propertiesFormatter);
     }
 }
