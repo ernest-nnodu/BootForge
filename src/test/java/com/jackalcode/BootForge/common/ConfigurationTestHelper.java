@@ -1,28 +1,25 @@
-package com.jackalcode.BootForge.mapper;
+package com.jackalcode.BootForge.common;
 
 import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.dto.*;
-import org.springframework.stereotype.Component;
 
-@Component
-public class ConfigurationMapper {
+public class ConfigurationTestHelper {
 
-    public Configuration toConfiguration(GenerateConfigRequest configRequest) {
+    public static Configuration toConfiguration(GenerateConfigRequest request) {
 
         return new Configuration(
-                mapApplication(configRequest.applicationConfigRequest()),
-                mapServer(configRequest.serverConfigRequest()),
-                mapDatabase(configRequest.databaseConfigRequest()),
-                mapJpa(configRequest.jpaConfigRequest()),
-                mapHikari(configRequest.hikariConfigRequest()),
-                mapLogging(configRequest.loggingConfigRequest()),
-                mapActuator(configRequest.actuatorConfigRequest())
+                toApplicationConfiguration(request.applicationConfigRequest()),
+                toServerConfiguration(request.serverConfigRequest()),
+                toDatabaseConfiguration(request.databaseConfigRequest()),
+                toJpaConfiguration(request.jpaConfigRequest()),
+                toHikariCOnfiguration(request.hikariConfigRequest()),
+                toLoggingConfiguration(request.loggingConfigRequest()),
+                toActuatorConfiguration(request.actuatorConfigRequest())
         );
     }
 
-    private ActuatorConfig mapActuator(ActuatorConfigRequest actuatorConfigRequest) {
+    private static ActuatorConfig toActuatorConfiguration(ActuatorConfigRequest actuatorConfigRequest) {
 
-        //If the request is null, the domain model will set default values
         if (actuatorConfigRequest == null) {
             return new ActuatorConfig(null, null);
         }
@@ -33,9 +30,8 @@ public class ConfigurationMapper {
         );
     }
 
-    private LoggingConfig mapLogging(LoggingConfigRequest loggingConfigRequest) {
+    private static LoggingConfig toLoggingConfiguration(LoggingConfigRequest loggingConfigRequest) {
 
-        //If the request is null, the domain model will set default values
         if (loggingConfigRequest == null) {
             return new LoggingConfig(null, null);
         }
@@ -46,9 +42,8 @@ public class ConfigurationMapper {
         );
     }
 
-    private HikariConfig mapHikari(HikariConfigRequest hikariConfigRequest) {
+    private static HikariConfig toHikariCOnfiguration(HikariConfigRequest hikariConfigRequest) {
 
-        //If the request is null, the domain model will set default values
         if (hikariConfigRequest == null) {
             return new HikariConfig(null, null, null);
         }
@@ -60,9 +55,8 @@ public class ConfigurationMapper {
         );
     }
 
-    private JpaConfig mapJpa(JpaConfigRequest jpaConfigRequest) {
+    private static JpaConfig toJpaConfiguration(JpaConfigRequest jpaConfigRequest) {
 
-        //If the request is null, the domain model will set default values
         if (jpaConfigRequest == null) {
             return new JpaConfig(null, null, null);
         }
@@ -74,7 +68,7 @@ public class ConfigurationMapper {
         );
     }
 
-    private DatabaseConfig mapDatabase(DatabaseConfigRequest databaseConfigRequest) {
+    private static DatabaseConfig toDatabaseConfiguration(DatabaseConfigRequest databaseConfigRequest) {
 
         return new DatabaseConfig(
                 databaseConfigRequest.databaseType(),
@@ -86,7 +80,8 @@ public class ConfigurationMapper {
         );
     }
 
-    private ServerConfig mapServer(ServerConfigRequest serverConfigRequest) {
+    private static ServerConfig toServerConfiguration(
+            ServerConfigRequest serverConfigRequest) {
 
         return new ServerConfig(
                 serverConfigRequest.port(),
@@ -94,7 +89,8 @@ public class ConfigurationMapper {
         );
     }
 
-    private ApplicationConfig mapApplication(ApplicationConfigRequest applicationConfigRequest) {
+    private static ApplicationConfig toApplicationConfiguration(
+            ApplicationConfigRequest applicationConfigRequest) {
 
         return new ApplicationConfig(
                 applicationConfigRequest.applicationName(),

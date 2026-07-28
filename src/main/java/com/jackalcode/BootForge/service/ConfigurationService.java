@@ -24,7 +24,7 @@ public class ConfigurationService {
 
     public String generateConfiguration(GenerateConfigRequest configRequest) {
 
-        Configuration config = configurationMapper.toDomain(configRequest);
+        Configuration config = configurationMapper.toConfiguration(configRequest);
         String configuration;
 
        switch (configRequest.outputFormat()) {

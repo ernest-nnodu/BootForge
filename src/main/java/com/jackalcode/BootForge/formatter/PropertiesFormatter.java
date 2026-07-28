@@ -72,12 +72,7 @@ public class PropertiesFormatter implements ConfigFormatter {
                 
                 """
                 .formatted(
-                        FormatterUtil.generateDatasourceUrl(
-                                databaseConfig.databaseType(),
-                                databaseConfig.databaseName(),
-                                databaseConfig.host(),
-                                databaseConfig.port()
-                        ),
+                        databaseConfig.getUrl(),
                         databaseConfig.username(),
                         databaseConfig.password()
                 );
