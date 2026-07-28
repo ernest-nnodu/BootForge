@@ -83,7 +83,7 @@ public class YamlResponseTestHelper {
             StringBuilder yaml,
             JpaConfigRequest jpa) {
 
-        if (jpa == null) {
+        if (jpa.ddlAuto() == null || jpa.showSql() == null || jpa.openInView() == null) {
             return;
         }
 
@@ -104,7 +104,7 @@ public class YamlResponseTestHelper {
             StringBuilder yaml,
             LoggingConfigRequest logging) {
 
-        if (logging == null) {
+        if (logging.rootLevel() == null || logging.springLevel() == null) {
             return;
         }
 
@@ -123,7 +123,7 @@ public class YamlResponseTestHelper {
             StringBuilder yaml,
             ActuatorConfigRequest actuator) {
 
-        if (actuator == null) {
+        if (actuator.showHealthDetails() == null || actuator.exposedEndpoints() == null) {
             return;
         }
 

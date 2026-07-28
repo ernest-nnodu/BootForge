@@ -2,6 +2,7 @@ package com.jackalcode.BootForge.controller;
 
 import com.jackalcode.BootForge.common.GenerateConfigRequestTestHelper;
 import com.jackalcode.BootForge.common.PropertiesResponseTestHelper;
+import com.jackalcode.BootForge.common.YamlResponseTestHelper;
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
 import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.common.RequestProps;
@@ -39,8 +40,8 @@ public class ConfigurationControllerTest {
     private static final String ENDPOINT = "/api/v1/configurations/generate";
 
     @Test
-    @DisplayName("generateConfig should return configuration and status 200 when request is valid")
-    void generateConfig_whenValidRequest_shouldReturnConfigurationAndStatus200() throws Exception {
+    @DisplayName("generateConfig should return properties configuration and status 200 when request is valid")
+    void generateConfig_whenValidPropertiesRequest_shouldReturnPropertiesConfigurationAndStatus200() throws Exception {
 
         var configRequestProps = RequestProps.builder()
                 .applicationName("test-app")
@@ -62,6 +63,36 @@ public class ConfigurationControllerTest {
         mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(configRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedResponse));
+
+        verify(configurationService).generateConfiguration(configRequest);
+    }
+
+    @Test
+    @DisplayName("generateConfig should return yaml configuration and status 200 when request is valid")
+    void generateConfig_whenValidYamlRequest_shouldReturnYamlConfigurationAndStatus200() throws Exception {
+
+        var configRequestProps = RequestProps.builder()
+                .applicationName("test-app")
+                .activeProfile("dev")
+                .serverPort(8080)
+                .contextPath("/api")
+                .databaseName("test-db")
+                .databaseType(DatabaseType.POSTGRESQL)
+                .databasePort(5432)
+                .username("test-user")
+                .password("test-password")
+                .outputFormat(OutputFormat.YAML)
+                .build();
+        var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(configRequestProps);
+        var expectedResponse = YamlResponseTestHelper.expectedYaml(configRequest);
+
+        when(configurationService.generateConfiguration(any(GenerateConfigRequest.class))).thenReturn(expectedResponse);
+
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(configRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedResponse));
 

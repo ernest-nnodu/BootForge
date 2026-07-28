@@ -2,7 +2,6 @@ package com.jackalcode.BootForge.integration;
 
 import com.jackalcode.BootForge.common.GenerateConfigRequestTestHelper;
 import com.jackalcode.BootForge.common.RequestProps;
-import com.jackalcode.BootForge.common.YamlResponseTestHelper;
 import com.jackalcode.BootForge.domain.enums.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
