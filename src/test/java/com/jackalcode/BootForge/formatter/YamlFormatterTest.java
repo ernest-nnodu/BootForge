@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
 
+import static com.jackalcode.BootForge.common.YamlResponseTestHelper.mapAt;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class YamlFormatterTest {
@@ -114,12 +115,5 @@ public class YamlFormatterTest {
 
         Map<String, Object> servlet = mapAt(server, "servlet");
         assertThat(servlet.get("context-path")).isEqualTo("/api");
-    }
-
-    @SuppressWarnings("unchecked")
-    private Map<String, Object> mapAt(Map<String, Object> parent, String key) {
-        Object value = parent.get(key);
-
-        return (Map<String, Object>) value;
     }
 }
