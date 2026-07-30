@@ -197,3 +197,73 @@ User
 
 
 
+For a 2–3 week BootForge deployment, focus only on the essentials. Group the work into four stages.
+
+Stage 1 — Production configuration
+
+Implement first:
+
+Create application-dev.yml
+Create application-prod.yml
+Configure environment variables for:
+server port
+allowed CORS origins
+logging level
+Confirm BootForge runs locally with the production profile
+
+Outcome: the same application can run in different environments without changing source code.
+
+Stage 2 — Health, CORS and logging
+
+Implement:
+
+Add Spring Boot Actuator
+Expose only:
+/actuator/health
+/actuator/health/liveness
+/actuator/health/readiness
+Add controlled CORS configuration
+Configure JSON logging for production
+
+You can postpone correlation IDs until after deployment.
+
+Outcome: the cloud platform can check whether BootForge is healthy, and a future frontend can access it safely.
+
+Stage 3 — Docker and local validation
+
+Implement:
+
+Create a multi-stage Dockerfile
+Run the application as a non-root user
+Add .dockerignore
+Create a simple docker-compose.yml
+Add a Compose health check
+Build and test the container locally
+
+Essential commands:
+
+docker build -t bootforge:local .
+docker compose up --build
+
+Verify:
+
+/actuator/health/readiness
+/api/v1/configurations
+
+Outcome: BootForge runs locally in approximately the same way it will run in production.
+
+Stage 4 — CI and Render deployment
+
+Implement:
+
+Create one GitHub Actions workflow
+Run mvn clean verify
+Build the Docker image
+Start the image in GitHub Actions
+Check the readiness endpoint
+Deploy BootForge to Render
+Configure Render environment variables
+Configure Render health check
+Test the public API
+
+For speed, let Render build directly from your GitHub repository and Dockerfile.
