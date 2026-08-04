@@ -11,6 +11,4 @@ RUN cp target/*.jar app.jar
 RUN addgroup -S app && adduser -S app -G app
 RUN chown app:app app.jar
 USER app
-ENV SERVER_PORT=8084
-EXPOSE 8084
 CMD ["java", "-jar", "app.jar"]
