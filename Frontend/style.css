@@ -1,0 +1,53 @@
+body {
+    width: 1920px;
+    height: 1080px;
+}
+
+header {
+    width: 100%;
+    height: 80px;
+}
+
+.logo {
+    width: 56px;
+    height: 56px;
+}
+
+.title {
+    width: 250px;
+    height: 60px;
+}
+
+.nav {
+    width: 150px;
+    height: 50px;
+}
+
+.sidebar {
+    width: 280px;
+    height: 100%;
+}
+
+.sidebar nav {
+    width: 220px;
+    height: 48px;
+}
+
+.sidebar-card {
+    width: 220px;
+    height: 260px;
+}
+
+.config {
+    width: 650px;
+    height: 820px;
+}
+
+.generate-config {
+    width: 850px;
+    height: 820px;
+}
+
+footer {
+    height: 60px;
+}

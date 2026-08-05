@@ -11,14 +11,15 @@
 <!-- Header section -->
 <header>
     <div class="logo">
-        <img src="assets/logo.png" alt="BootForge Logo" height="100" width="100">
+        <img src="assets/logo.png" alt="BootForge Logo" height="56" width="56">
+    </div>
+    <div class="title">
         <h1>BootForge</h1>
         <p>Spring boot config generator</p>
     </div>
     <div class="nav">
+        <p>Theme toggle</p>
         <p>Github</p>
-        <p>Dark Mode</p>
-        <p>Light Mode</p>
     </div>
 </header>
 
@@ -26,7 +27,7 @@
 <main>
 
     <!-- Sidebar section -->
-    <aside>
+    <aside class="sidebar">
         <div class="sidebar-nav">
             <ul>
                 <li>Generator</li>
@@ -34,7 +35,7 @@
                 <li>About</li>
             </ul>
         </div>
-        <div class="sidebar-footer">
+        <div class="sidebar-card">
             <img src="" alt="User Avatar" height="50" width="50">
             <div>
                 <p>Build Faster.</p>
@@ -48,8 +49,7 @@
     </aside>
 
         <!-- Configuration section -->
-    <section>
-        <div class="config">
+    <section class="config">
             <h4>Configuration</h4>
             <p>Fill in the details below to generate your Spring Boot configuration</p>
 
@@ -131,12 +131,10 @@
 
                 <input type="submit" value="Generate">
             </form>
-        </div>
 </section>
 
         <!-- Generated configuration section -->
-        <section>
-
+        <section class="generate-config">
             <div class="generator">
                 <h4>Generated Configuration</h4>
                 <p>application.properties</p>
