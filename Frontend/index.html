@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BootForge</title>
+</head>
+<body>
+
+<!-- Header section -->
+<header>
+    <div class="logo">
+        <img src="assets/logo.png" alt="BootForge Logo" height="100" width="100">
+        <h1>BootForge</h1>
+        <p>Spring boot config generator</p>
+    </div>
+    <div class="nav">
+        <p>Github</p>
+        <p>Dark Mode</p>
+        <p>Light Mode</p>
+    </div>
+</header>
+
+<!-- Main section -->
+<main>
+
+    <!-- Sidebar section -->
+    <aside>
+        <div class="sidebar-nav">
+            <ul>
+                <li>Generator</li>
+                <li>Templates</li>
+                <li>About</li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <img src="" alt="User Avatar" height="50" width="50">
+            <div>
+                <p>Build Faster.</p>
+                <p>Configure Smarter.</p>
+                <p>Ship Better.</p>
+            </div>
+            <div>
+                <p>BootForge helps you generate production-ready Spring Boot configs in seconds</p>
+            </div>
+        </div>
+    </aside>
+
+        <!-- Configuration section -->
+    <section>
+        <div class="config">
+            <h4>Configuration</h4>
+            <p>Fill in the details below to generate your Spring Boot configuration</p>
+
+            <form>
+                <!-- Project form section -->
+                <div class="project-input">
+                    <div class="form-group">
+                        <label for="project-name">Project Name</label>
+                        <input type="text" id="project-name" placeholder="Enter project name">
+                    </div>
+                    <div class="form-group">
+                        <label for="active-profile">Active Profile</label>
+                        <input type="text" id="active-profile" placeholder="Enter active profile">
+                    </div>
+                </div>
+                <hr/>
+
+                <!-- Server form section -->
+                <div class="server-input">
+                    <div class="form-group">
+                        <label for="server-port">Server Port</label>
+                        <input type="number" id="server-port" placeholder="Enter server port">
+                    </div>
+                    <div class="form-group">
+                        <label for="context-path">Context Path</label>
+                        <input type="text" id="context-path" placeholder="Enter context path">
+                    </div>
+                </div>
+                <hr/>
+
+                <!-- Database form section -->
+                <div class="database-input">
+                    <div class="form-group">
+                        <label for="database-type">Type</label>
+                        <select id="database-type">
+                            <option value="POSTGRESQL" selected>PostgreSQL</option>
+                            <option value="MYSQL">MySQL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="database-name">Name</label>
+                        <input type="text" id="database-name" placeholder="Enter database name">
+                    </div>
+                    <div class="form-group">
+                        <label for="database-port">Port</label>
+                        <input type="number" id="database-port" placeholder="Enter database port">
+                    </div>
+                    <div class="form-group">
+                        <label for="database-username">Username</label>
+                        <input type="text" id="database-username" placeholder="Enter database username">
+                    </div>
+                    <div class="form-group">
+                        <label for="database-password">Password</label>
+                        <input type="password" id="database-password" placeholder="Enter database password">
+                    </div>
+                </div>
+                <hr/>
+
+                <!-- Jpa form section -->
+                <div class="jpa-input">
+                    <div class="form-group">
+                        <label for="ddl-auto">DDL Auto</label>
+                        <select id="ddl-auto">
+                            <option value="NONE" selected>None</option>
+                            <option value="CREATE">Create</option>
+                            <option value="UPDATE">Update</option>
+                            <option value="VALIDATE">Validate</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="show-sql">Show SQL</label>
+                        <select id="show-sql">
+                            <option value="true">True</option>
+                            <option value="false" selected>False</option>
+                        </select>
+                    </div>
+                </div>
+                <hr/>
+
+                <input type="submit" value="Generate">
+            </form>
+        </div>
+</section>
+
+        <!-- Generated configuration section -->
+        <section>
+
+            <div class="generator">
+                <h4>Generated Configuration</h4>
+                <p>application.properties</p>
+            </div>
+
+            <div class="config-content">
+                <pre><code id="generated-config"></code></pre>
+            </div>
+
+            <div>
+                <button>Download</button>
+                <button>Copy to clipboard</button>
+            </div>
+        </section>
+</main>
+
+<!-- Footer section -->
+<footer>
+    <p>© 2024 BootForge. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
