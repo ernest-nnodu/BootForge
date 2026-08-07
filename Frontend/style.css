@@ -73,29 +73,41 @@ header {
     padding: 0 16px;
 }
 
+.main-section {
+    display: flex;
+    gap: 16px;
+    height: 600px;
+    padding: 10px;
+}
+
 .sidebar {
     width: 280px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
 }
 
 .sidebar nav {
     width: 220px;
-    height: 48px;
 }
 
 .sidebar-card {
     width: 220px;
-    height: 260px;
 }
 
 .config {
     width: 650px;
-    height: 820px;
+    height: 100%;
+    border: 1px solid black;
 }
 
 .generate-config {
     width: 850px;
-    height: 820px;
+    height: 100%;
+    border: 1px solid black;
 }
 
 footer {
