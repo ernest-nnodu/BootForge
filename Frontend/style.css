@@ -60,16 +60,27 @@ header {
 }
 
 .header-actions {
-    width: 150px;
+    width: 250px;
     height: 50px;
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
     gap: 16px;
 }
 
+.header-actions button {
+    border: none;
+    width: 200px;
+    height: 25px;
+    text-align: center;
+}
+
 .header-actions a {
     text-decoration: none;
-    height: 40px;
+    color: black;
+    text-align: center;
+    border: 1px solid black;
+    height: 30px;
     padding: 0 16px;
 }
 
@@ -248,6 +259,7 @@ header {
     min-height: 685px;
     padding: 10px;
     margin-top: 10px;
+    overflow: scroll;
 }
 
 .output-actions {
@@ -270,5 +282,11 @@ header {
 }
 
 footer {
+    width: 100%;
     height: 60px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
 }
