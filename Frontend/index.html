@@ -147,17 +147,23 @@
 </section>
 
         <!-- Generated configuration section -->
-        <section class="generate-config">
-            <div class="generator">
+        <section class="output-panel">
+            <div class="output-header">
                 <h4>Generated Configuration</h4>
-                <p>application.properties</p>
+                <div class="output-format-selector">
+                    <label for="output-format">Format:</label>
+                    <select id="output-format">
+                        <option value="application.properties" selected>application.properties</option>
+                        <option value="application.yml">application.yml</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="config-content">
+            <div class="config-output">
                 <pre><code id="generated-config"></code></pre>
             </div>
 
-            <div>
+            <div class="output-actions">
                 <button>Download</button>
                 <button>Copy to clipboard</button>
             </div>

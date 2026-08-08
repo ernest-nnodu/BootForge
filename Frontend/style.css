@@ -121,6 +121,7 @@ header {
     gap: 20px;
     padding: 10px;
     border: 1px solid black;
+    border-radius: 10px;
 }
 
 .sidebar-card img {
@@ -196,7 +197,7 @@ header {
 .configuration-form input[type="submit"] {
     width: 100%;
     height: 40px;
-    margin: 10px auto;
+    margin: 20px auto;
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 8px;
@@ -204,10 +205,68 @@ header {
     font-weight: bold;
 }
 
-.generate-config {
-    width: 650px;
+.output-panel {
+    width: 640px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
     border: 1px solid black;
+    border-radius: 5px;
+}
+
+.output-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.output-header label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.output-header select {
+    width: 200px;
+    height: 35px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.config-output {
+    width: 100%;
+}
+
+.config-output pre {
+    background-color: black;
+    min-height: 685px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.output-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.output-actions button {
+    width: 45%;
+    height: 40px;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 footer {
