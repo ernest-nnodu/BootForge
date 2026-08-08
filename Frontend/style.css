@@ -75,15 +75,15 @@ header {
 
 .main-section {
     width: 100%;
+    min-height: 100vh;
     display: flex;
-    height: 600px;
     padding: 0;
     border: 1px solid black;
 }
 
 .sidebar {
     width: 250px;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -134,10 +134,74 @@ header {
     padding: 10px;
 }
 
-.config {
-    width: 590px;
+.config-panel {
+    width: 600px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
     border: 1px solid black;
+    border-radius: 5px;
+}
+
+.configuration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-section {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-section h4 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.form-groups {
+    display: flex;
+    gap: 20px;
+    padding: 5px;
+}
+
+.database-options {
+    flex-wrap: wrap;
+}
+
+.form-group {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 250px;
+    height: 35px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.configuration-form input[type="submit"] {
+    width: 100%;
+    height: 40px;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .generate-config {
