@@ -1,4 +1,5 @@
-FROM maven:3.9.4-eclipse-temurin-21-alpine
+
+FROM maven:3.9.4-eclipse-temurin-21-alpine AS build
 WORKDIR /app
 COPY pom.xml .
 RUN --mount=type=cache,target=/root/.m2 \
@@ -7,8 +8,10 @@ COPY src ./src
 RUN --mount=type=cache,target=/root/.m2 \
         mvn clean package -DskipTests
 
-RUN cp target/*.jar app.jar
+FROM eclipse-temurin:21-jre-alpine
 RUN addgroup -S app && adduser -S app -G app
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 RUN chown app:app app.jar
 USER app
 CMD ["java", "-jar", "app.jar"]
