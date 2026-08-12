@@ -35,7 +35,7 @@ header {
 
     padding: 0 32px;
 
-    background-color: white;
+    background-color: #ffffff;
     border-bottom: 1px solid lightgray;
 }
 
@@ -56,7 +56,8 @@ header {
     justify-content: center;
     align-items: center;
 
-    border: 1px solid black;
+    color: #4a2be0;
+    border: 1px solid #6d4aff;
     border-radius: 8px;
 }
 
@@ -89,12 +90,20 @@ header {
 }
 
 .header-actions button:hover {
-    background-color: lightgray;
+    background-color: #f0ebff;
+    color: #6d4aff;
     cursor: pointer;
 }
 
+.header-actions button:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
 .header-actions button:active {
-    background-color: darkgray;
+    background-color: #6d4aff;
+    color: #ffffff;
 }
 
 .header-actions a {
@@ -110,21 +119,28 @@ header {
     font-size: 14px;
     font-weight: 600;
 
-    border: 1px solid black;
+    border: 1px solid lightgray;
     border-radius: 6px;
 
     transition: 0.5s ease-in-out;
 }
 
 .header-actions a:hover {
-    background-color: lightgray;
-    color: black;
-    border: 1px solid lightgray;
+    background-color: #f0ebff;
+    color: #6d4aff;
+    border-color: #6d4aff;
     cursor: pointer;
 }
 
+.header-actions a:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
 .header-actions a:active {
-    background-color: darkgray;
+    background-color: #6d4aff;
+    color: #ffffff;
 }
 
 
@@ -152,6 +168,7 @@ header {
 
     padding: 24px;
 
+    background-color: #ffffff;
     border-right: 1px solid lightgray;
 }
 
@@ -190,13 +207,19 @@ header {
 }
 
 .sidebar-nav a:hover {
-    background-color: lightgray;
-    color: black;
+    background-color: #6d4aff;
+    color: #ffffff;
     cursor: pointer;
 }
 
+.sidebar-nav a:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
 .sidebar-nav a:active {
-    background-color: darkgray;
+    background-color: #6d4aff;
 }
 
 
@@ -212,7 +235,8 @@ header {
     flex-direction: column;
     gap: 16px;
 
-    border: 1px solid lightgray;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
 }
 
@@ -220,14 +244,24 @@ header {
     width: 50px;
     height: 50px;
 
-    border: 1px solid lightgray;
-    border-radius: 6px;
+    background-color: #6d4aff;
+    color: #ffffff;
+    border: 1px solid #6d4aff;
+    border-radius: 50%;
 }
 
 .sidebar-card p {
     margin: 0;
     font-size: 14px;
-    font-weight: 500;
+}
+
+#promotion {
+    color: #111827;
+    font-weight: 600;
+}
+
+#description {
+    color: #6b7280;
 }
 
 
@@ -256,7 +290,7 @@ header {
 
     padding: 24px;
 
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid lightgray;
     border-radius: 8px;
 }
@@ -299,6 +333,7 @@ header {
 .form-section h4 {
     margin: 0 0 16px;
 
+    color: #6d4aff;
     font-size: 16px;
     font-weight: 600;
 }
@@ -333,7 +368,7 @@ header {
 
 .form-group label {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .form-group input,
@@ -346,8 +381,16 @@ header {
     font-family: inherit;
     font-size: 14px;
 
-    border: 1px solid lightgray;
+    background-color: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
     border-radius: 6px;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
 }
 
 
@@ -359,16 +402,26 @@ header {
 
     padding: 0 16px;
 
-    transition: 0.75s ease-in-out;
+    background-color: #6d4aff;
+    color: #ffffff;
+    border: none;
+
+    transition: 0.25s ease-in-out;
 }
 
 .configuration-form button[type="submit"]:hover {
-    background-color: lightgray;
+    background-color: #5b3df5;
     cursor: pointer;
 }
 
+.configuration-form button[type="submit"]:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
 .configuration-form button[type="submit"]:active {
-    background-color: darkgray;
+    background-color: #4a2be0;
 }
 
 /* ========================================
@@ -384,7 +437,7 @@ header {
     display: flex;
     flex-direction: column;
 
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid lightgray;
     border-radius: 8px;
 }
@@ -425,8 +478,16 @@ header {
     font-family: inherit;
     font-size: 14px;
 
-    border: 1px solid lightgray;
+    color: #111827;
+    border: 1px solid #d1d5db;
     border-radius: 6px;
+}
+
+.output-format-selector select:focus {
+
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
 }
 
 
@@ -446,8 +507,8 @@ header {
 
     overflow: auto;
 
-    background-color: black;
-    color: white;
+    background-color: #111827;
+    color: #f9fafb;
 
     font-family: monospace;
     font-size: 14px;
@@ -472,16 +533,28 @@ header {
     height: 48px;
     padding: 0 16px;
 
+    background-color: #ffffff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+
     transition: 0.25s ease-in-out;
 }
 
 .output-actions button:hover {
-    background-color: lightgray;
+    background-color: #f0ebff;
+    color: #6d4aff;
     cursor: pointer;
 }
 
+.output-actions button:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
 .output-actions button:active {
-    background-color: darkgray;
+    background-color: #6d4aff;
+    color: #ffffff;
 }
 
 
@@ -500,7 +573,7 @@ footer {
     padding: 0 32px;
 
     border-top: 1px solid lightgray;
-
+    background-color: #ffffff;
     font-size: 14px;
 }
 
@@ -513,8 +586,8 @@ COMMON CLASSES
 ======================================== */
 
 a.active {
-    background-color: dimgray;
-    color: white;
+    background-color: #f0ebff;
+    color: #6d4aff;
     border: 1px solid lightgray;
     border-radius: 8px;
 }
