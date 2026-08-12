@@ -1,0 +1,529 @@
+/* ========================================
+   GLOBAL
+   ======================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: #f5f7fb;
+    color: #1f2937;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+header {
+    width: 100%;
+    height: 80px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 32px;
+
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+}
+
+
+/* Branding */
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.title-section h1 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.title-section p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* Header actions */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-actions button {
+    height: 40px;
+    padding: 0 16px;
+    transition: 0.5s ease-in-out;
+}
+
+.header-actions button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.header-actions button:active {
+    background-color: darkgray;
+}
+
+.header-actions a {
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 16px;
+
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    border: 1px solid black;
+    border-radius: 6px;
+
+    transition: 0.5s ease-in-out;
+}
+
+.header-actions a:hover {
+    background-color: lightgray;
+    color: black;
+    border: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.header-actions a:active {
+    background-color: darkgray;
+}
+
+
+/* ========================================
+   MAIN PAGE LAYOUT
+   ======================================== */
+
+.main-section {
+    width: 100%;
+
+    display: flex;
+}
+
+
+/* ========================================
+   SIDEBAR
+   ======================================== */
+
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+
+    border-right: 1px solid lightgray;
+}
+
+
+/* Navigation */
+
+.sidebar-nav {
+    width: 100%;
+}
+
+.sidebar-nav ul {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    list-style: none;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 8px;
+
+    transition: 0.25s ease-in-out;
+}
+
+.sidebar-nav a:hover {
+    background-color: lightgray;
+    color: black;
+    cursor: pointer;
+}
+
+.sidebar-nav a:active {
+    background-color: darkgray;
+}
+
+
+/* Sidebar information card */
+
+.sidebar-card {
+    width: 100%;
+
+    margin-top: auto;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.sidebar-card img {
+    width: 50px;
+    height: 50px;
+
+    border: 1px solid lightgray;
+    border-radius: 6px;
+}
+
+.sidebar-card p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+
+.main-content {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    gap: 24px;
+
+    padding: 24px 32px;
+}
+
+
+/* ========================================
+   CONFIGURATION PANEL
+   ======================================== */
+
+.config-panel {
+    min-width: 0;
+    flex: 1;
+
+    padding: 24px;
+
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.config-panel h2 {
+    margin: 0 0 8px;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.config-panel > p {
+    margin: 0 0 24px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* ========================================
+   CONFIGURATION FORM
+   ======================================== */
+
+.configuration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+/* Individual configuration section */
+
+.form-section {
+    padding: 16px;
+
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.form-section h4 {
+    margin: 0 0 16px;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+/* Row containing fields */
+
+.form-groups {
+    display: flex;
+    gap: 16px;
+}
+
+.database-options {
+    flex-wrap: wrap;
+}
+
+
+/* Individual field */
+
+.form-group {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.database-options .form-group {
+    flex-basis: calc(50% - 8px);
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 12px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    border: 1px solid lightgray;
+    border-radius: 6px;
+}
+
+
+/* Generate button */
+
+.configuration-form button[type="submit"] {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 16px;
+
+    transition: 0.75s ease-in-out;
+}
+
+.configuration-form button[type="submit"]:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.configuration-form button[type="submit"]:active {
+    background-color: darkgray;
+}
+
+/* ========================================
+   OUTPUT PANEL
+   ======================================== */
+
+.output-panel {
+    min-width: 0;
+    flex: 1;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+
+/* Output header */
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 16px;
+}
+
+.output-header h4 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.output-format-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.output-header label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.output-header select {
+    height: 40px;
+    padding: 0 12px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    border: 1px solid lightgray;
+    border-radius: 6px;
+}
+
+
+/* Generated configuration */
+
+.config-output {
+    min-width: 0;
+    flex: 1;
+}
+
+.config-output pre {
+    width: 100%;
+    min-height: 800px;
+
+    margin: 0;
+    padding: 16px;
+
+    overflow: auto;
+
+    background-color: black;
+    color: white;
+
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.6;
+
+    border-radius: 8px;
+}
+
+
+/* Output buttons */
+
+.output-actions {
+    display: flex;
+    gap: 16px;
+
+    margin-top: 16px;
+}
+
+.output-actions button {
+    flex: 1;
+
+    height: 48px;
+    padding: 0 16px;
+
+    transition: 0.25s ease-in-out;
+}
+
+.output-actions button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.output-actions button:active {
+    background-color: darkgray;
+}
+
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+footer {
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 32px;
+
+    border-top: 1px solid lightgray;
+
+    font-size: 14px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* ========================================
+COMMON CLASSES
+======================================== */
+
+a.active {
+    background-color: dimgray;
+    color: white;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.buttons {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    border: none;
+    border-radius: 8px;
+}
