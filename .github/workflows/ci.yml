@@ -1,6 +1,8 @@
 name: BootForge Build and Test CI
 
 on:
+	push:
+		branches: [ "main" ]
 	pull_request:
 		branches: [ "main" ]
 
