@@ -57,8 +57,6 @@ header {
     align-items: center;
 
     color: #4a2be0;
-    border: 1px solid #6d4aff;
-    border-radius: 8px;
 }
 
 .title-section h1 {
@@ -240,14 +238,16 @@ header {
     border-radius: 8px;
 }
 
-.sidebar-card img {
+.sidebar-card svg {
+
     width: 50px;
     height: 50px;
 
     background-color: #6d4aff;
-    color: #ffffff;
     border: 1px solid #6d4aff;
     border-radius: 50%;
+
+    padding: 8px;
 }
 
 .sidebar-card p {
@@ -400,6 +400,11 @@ header {
     width: 100%;
     height: 48px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
     padding: 0 16px;
 
     background-color: #6d4aff;
@@ -528,6 +533,10 @@ header {
 }
 
 .output-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     flex: 1;
 
     height: 48px;
