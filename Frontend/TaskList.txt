@@ -1,0 +1,8 @@
+
+Finish and clean up your current HTML + CSS desktop layout.
+Add hover and focus states for links, buttons, inputs, and selects.
+Improve visual hierarchy with consistent typography and spacing.
+Add the final BootForge colour palette and code-panel styling.
+Rebuild/refactor parts using Bootstrap 5.
+Add JavaScript to submit the form to your Spring Boot API and display the generated configuration.
+Deploy the frontend to GitHub Pages.

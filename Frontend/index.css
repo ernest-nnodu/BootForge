@@ -1,0 +1,611 @@
+/* ========================================
+   GLOBAL
+   ======================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: #f5f7fb;
+    color: #1f2937;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+header {
+    width: 100%;
+    height: 80px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 32px;
+
+    background-color: #ffffff;
+    border-bottom: 1px solid lightgray;
+}
+
+
+/* Branding */
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #4a2be0;
+}
+
+.title-section h1 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.title-section p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* Header actions */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-actions button {
+    height: 40px;
+    padding: 0 16px;
+    transition: 0.5s ease-in-out;
+}
+
+.header-actions button:hover {
+    background-color: #f0ebff;
+    color: #6d4aff;
+    cursor: pointer;
+}
+
+.header-actions button:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+.header-actions button:active {
+    background-color: #6d4aff;
+    color: #ffffff;
+}
+
+.header-actions a {
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 16px;
+
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    border: 1px solid lightgray;
+    border-radius: 6px;
+
+    transition: 0.5s ease-in-out;
+}
+
+.header-actions a:hover {
+    background-color: #f0ebff;
+    color: #6d4aff;
+    border-color: #6d4aff;
+    cursor: pointer;
+}
+
+.header-actions a:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+.header-actions a:active {
+    background-color: #6d4aff;
+    color: #ffffff;
+}
+
+
+/* ========================================
+   MAIN PAGE LAYOUT
+   ======================================== */
+
+.main-section {
+    width: 100%;
+
+    display: flex;
+}
+
+
+/* ========================================
+   SIDEBAR
+   ======================================== */
+
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+
+    background-color: #ffffff;
+    border-right: 1px solid lightgray;
+}
+
+
+/* Navigation */
+
+.sidebar-nav {
+    width: 100%;
+}
+
+.sidebar-nav ul {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    list-style: none;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 8px;
+
+    transition: 0.25s ease-in-out;
+}
+
+.sidebar-nav a:hover {
+    background-color: #6d4aff;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.sidebar-nav a:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+.sidebar-nav a:active {
+    background-color: #6d4aff;
+}
+
+
+/* Sidebar information card */
+
+.sidebar-card {
+    width: 100%;
+
+    margin-top: auto;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.sidebar-card svg {
+
+    width: 50px;
+    height: 50px;
+
+    background-color: #6d4aff;
+    border: 1px solid #6d4aff;
+    border-radius: 50%;
+
+    padding: 8px;
+}
+
+.sidebar-card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+#promotion {
+    color: #111827;
+    font-weight: 600;
+}
+
+#description {
+    color: #6b7280;
+}
+
+
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+
+.main-content {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    gap: 24px;
+
+    padding: 24px 32px;
+}
+
+
+/* ========================================
+   CONFIGURATION PANEL
+   ======================================== */
+
+.config-panel {
+    min-width: 0;
+    flex: 1;
+
+    padding: 24px;
+
+    background-color: #ffffff;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.config-panel h2 {
+    margin: 0 0 8px;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.config-panel > p {
+    margin: 0 0 24px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* ========================================
+   CONFIGURATION FORM
+   ======================================== */
+
+.configuration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+/* Individual configuration section */
+
+.form-section {
+    padding: 16px;
+
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.form-section h4 {
+    margin: 0 0 16px;
+
+    color: #6d4aff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+/* Row containing fields */
+
+.form-groups {
+    display: flex;
+    gap: 16px;
+}
+
+.database-options {
+    flex-wrap: wrap;
+}
+
+
+/* Individual field */
+
+.form-group {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.database-options .form-group {
+    flex-basis: calc(50% - 8px);
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 12px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    background-color: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+
+/* Generate button */
+
+.configuration-form button[type="submit"] {
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 0 16px;
+
+    background-color: #6d4aff;
+    color: #ffffff;
+    border: none;
+
+    transition: 0.25s ease-in-out;
+}
+
+.configuration-form button[type="submit"]:hover {
+    background-color: #5b3df5;
+    cursor: pointer;
+}
+
+.configuration-form button[type="submit"]:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+.configuration-form button[type="submit"]:active {
+    background-color: #4a2be0;
+}
+
+/* ========================================
+   OUTPUT PANEL
+   ======================================== */
+
+.output-panel {
+    min-width: 0;
+    flex: 1;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #ffffff;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+
+/* Output header */
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 16px;
+}
+
+.output-header h4 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.output-format-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.output-header label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.output-header select {
+    height: 40px;
+    padding: 0 12px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    color: #111827;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.output-format-selector select:focus {
+
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+
+/* Generated configuration */
+
+.config-output {
+    min-width: 0;
+    flex: 1;
+}
+
+.config-output pre {
+    width: 100%;
+    min-height: 800px;
+
+    margin: 0;
+    padding: 16px;
+
+    overflow: auto;
+
+    background-color: #111827;
+    color: #f9fafb;
+
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.6;
+
+    border-radius: 8px;
+}
+
+
+/* Output buttons */
+
+.output-actions {
+    display: flex;
+    gap: 16px;
+
+    margin-top: 16px;
+}
+
+.output-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex: 1;
+
+    height: 48px;
+    padding: 0 16px;
+
+    background-color: #ffffff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+
+    transition: 0.25s ease-in-out;
+}
+
+.output-actions button:hover {
+    background-color: #f0ebff;
+    color: #6d4aff;
+    cursor: pointer;
+}
+
+.output-actions button:focus {
+    outline: none;
+    border-color: #6d4aff;
+    box-shadow: 0 0 0 1px #6d4aff;
+}
+
+.output-actions button:active {
+    background-color: #6d4aff;
+    color: #ffffff;
+}
+
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+footer {
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 32px;
+
+    border-top: 1px solid lightgray;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* ========================================
+COMMON CLASSES
+======================================== */
+
+a.active {
+    background-color: #f0ebff;
+    color: #6d4aff;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.buttons {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    border: none;
+    border-radius: 8px;
+}
