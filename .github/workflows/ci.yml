@@ -1,24 +1,24 @@
-name: Build and Test CI
+name: BootForge Build and Test CI
 
-	on:  
-		pull_request:    
-			branches: 
-				[ "main" ]
-				
-	jobs:  
-		build-and-test:    
-			runs-on: ubuntu-latest    
-			
-			steps:      
-				- name: Checkout code        
-				  uses: actions/checkout@v4      
-				  
-				- name: Set up Java        
-				  uses: actions/setup-java@v4        
-				  with:          
-					  distribution: temurin          
-					  java-version: 21          
-					  cache: maven      
-					  
-				- name: Build and test        
-				  run: mvn clean verify
+on:
+	pull_request:
+		branches: [ "main" ]
+
+jobs:
+	build:
+
+		runs-on: ubuntu-latest
+
+		steps:
+			- name: Checkout code
+			  uses: actions/checkout@v4
+
+			- name: Set up JDK
+			  uses: actions/setup-java@v4
+			  with:
+				  java-version: '21'
+				  distribution: 'temurin'
+				  cache: maven
+
+			- name: Build with Maven
+			  run: mvn clean verify
