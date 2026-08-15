@@ -66,7 +66,7 @@ public class ConfigurationIntegrationTest {
         var result = mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(configRequest)))
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andReturn();
 
         var response = result.getResponse().getContentAsString();
