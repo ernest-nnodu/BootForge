@@ -37,7 +37,7 @@ jobs:
       run: docker build -t bootforge-api .
 
     - name: Run docker image
-      run: docker run -d -p 8000:8000 --name bootforge-api bootforge-api
+      run: docker run --detach --publish 8000:8000 --env SERVER_PORT=8000 --name bootforge-api bootforge-api
 
     - name: Check BootForge API readiness
       run: |
