@@ -86,13 +86,13 @@
             </div>
         </aside>
 
-        <div class="main-content col-10">
+        <div class="main-content col-10 d-flex gap-4 py-3 px-4">
             <!-- Configuration section -->
             <section class="config-panel">
                 <h2>Configuration</h2>
                 <p>Fill in the details below to generate your Spring Boot configuration</p>
 
-                <form class="configuration-form">
+                <form class="configuration-form d-flex flex-column gap-4">
                     <!-- Project form section -->
                     <div class="form-section">
                         <h4>Project Details</h4>
@@ -191,10 +191,10 @@
             </section>
 
             <!-- Generated configuration section -->
-            <section class="output-panel">
-                <div class="output-header">
+            <section class="output-panel d-flex flex-column">
+                <div class="output-header d-flex justify-content-between align-items-center">
                     <h4>Generated Configuration</h4>
-                    <div class="output-format-selector">
+                    <div class="output-format-selector d-flex align-items-center gap-2">
                         <label for="output-format">Format:</label>
                         <select id="output-format">
                             <option value="application.properties" selected>application.properties</option>
@@ -207,15 +207,15 @@
                     <pre><code id="generated-config"></code></pre>
                 </div>
 
-                <div class="output-actions">
-                    <button class="buttons">
+                <div class="output-actions d-flex gap-3 mt-1">
+                    <button class="buttons d-flex justify-content-center align-items-center gap-2 flex-grow-1">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                             <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/>
                         </svg>
                         Download
                     </button>
-                    <button class="buttons">
+                    <button class="buttons d-flex justify-content-center align-items-center gap-2 flex-grow-1">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                             <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-24<PASSWORD>"/>
