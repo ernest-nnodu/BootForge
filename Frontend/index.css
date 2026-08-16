@@ -53,24 +53,23 @@ header {
 
 /* Header actions */
 
-.header-actions button {
-    height: 40px;
+#theme-btn {
     transition: 0.5s ease-in-out;
 }
 
-.header-actions button:hover {
+#theme-btn:hover {
     background-color: #f0ebff;
     color: #6d4aff;
     cursor: pointer;
 }
 
-.header-actions button:focus {
+#theme-btn:focus {
     outline: none;
     border-color: #6d4aff;
     box-shadow: 0 0 0 1px #6d4aff;
 }
 
-.header-actions button:active {
+#theme-btn:active {
     background-color: #6d4aff;
     color: #ffffff;
 }
@@ -292,22 +291,6 @@ header {
     font-weight: 600;
 }
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    height: 44px;
-
-    padding: 0 12px;
-
-    font-family: inherit;
-    font-size: 14px;
-
-    background-color: #ffffff;
-    color: #111827;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-}
-
 .form-group input:focus, .form-group select:focus {
     outline: none;
     border-color: #6d4aff;
@@ -318,15 +301,6 @@ header {
 /* Generate button */
 
 .configuration-form button[type="submit"] {
-    width: 100%;
-    height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    padding: 0 16px;
 
     background-color: #6d4aff;
     color: #ffffff;
@@ -385,7 +359,7 @@ header {
 }
 
 .output-header select {
-    height: 40px;
+    /*height: 40px;
     padding: 0 12px;
 
     font-family: inherit;
@@ -393,7 +367,7 @@ header {
 
     color: #111827;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: 6px;*/
 }
 
 .output-format-selector select:focus {
@@ -433,10 +407,7 @@ header {
 
 /* Output buttons */
 
-.output-actions button {
-
-    height: 48px;
-    padding: 0 16px;
+#download-btn, #copy-btn {
 
     background-color: #ffffff;
     color: #374151;
@@ -445,19 +416,19 @@ header {
     transition: 0.25s ease-in-out;
 }
 
-.output-actions button:hover {
+#download-btn:hover, #copy-btn:hover {
     background-color: #f0ebff;
     color: #6d4aff;
     cursor: pointer;
 }
 
-.output-actions button:focus {
+#download-btn:focus, #copy-btn:focus {
     outline: none;
     border-color: #6d4aff;
     box-shadow: 0 0 0 1px #6d4aff;
 }
 
-.output-actions button:active {
+#download-btn:active, #copy-btn:active {
     background-color: #6d4aff;
     color: #ffffff;
 }
@@ -494,10 +465,10 @@ a.active {
 }
 
 .buttons {
-    font-family: inherit;
+    /*font-family: inherit;
     font-size: 14px;
     font-weight: 600;
 
     border: none;
-    border-radius: 8px;
+    border-radius: 8px;*/
 }

@@ -31,7 +31,7 @@
     </div>
 
     <div class="header-actions d-flex align-items-center gap-3">
-        <button class="buttons py-0 px-3">
+        <button id="theme-btn" class="btn btn-light py-2 px-4">
             <svg xmlns="http://www.w3.org/2000/svg"
                  height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                 <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/>
@@ -98,12 +98,12 @@
                         <h4>Project Details</h4>
                         <div class="form-groups">
                             <div class="form-group">
-                                <label for="project-name">Project Name</label>
-                                <input type="text" id="project-name" placeholder="Enter project name">
+                                <label class="form-label" for="project-name">Project Name</label>
+                                <input class="form-control" type="text" id="project-name" placeholder="Enter project name">
                             </div>
                             <div class="form-group">
-                                <label for="active-profile">Active Profile</label>
-                                <input type="text" id="active-profile" placeholder="Enter active profile">
+                                <label class="form-label" for="active-profile">Active Profile</label>
+                                <input class="form-control" type="text" id="active-profile" placeholder="Enter active profile">
                             </div>
                         </div>
                     </div>
@@ -113,12 +113,12 @@
                         <h4>Server Settings</h4>
                         <div class="form-groups">
                             <div class="form-group">
-                                <label for="server-port">Server Port</label>
-                                <input type="number" id="server-port" placeholder="Enter server port">
+                                <label class="form-label" for="server-port">Server Port</label>
+                                <input class="form-control" type="number" id="server-port" placeholder="Enter server port">
                             </div>
                             <div class="form-group">
-                                <label for="context-path">Context Path</label>
-                                <input type="text" id="context-path" placeholder="Enter context path">
+                                <label class="form-label" for="context-path">Context Path</label>
+                                <input class="form-control" type="text" id="context-path" placeholder="Enter context path">
                             </div>
                         </div>
                     </div>
@@ -128,31 +128,31 @@
                         <h4>Database Settings</h4>
                         <div class="form-groups database-options">
                             <div class="form-group">
-                                <label for="database-type">Type</label>
-                                <select id="database-type">
+                                <label class="form-label" for="database-type">Type</label>
+                                <select class="form-select" id="database-type">
                                     <option value="POSTGRESQL" selected>PostgreSQL</option>
                                     <option value="MYSQL">MySQL</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="database-name">Name</label>
-                                <input type="text" id="database-name" placeholder="Enter database name">
+                                <label class="form-label" for="database-name">Name</label>
+                                <input class="form-control" type="text" id="database-name" placeholder="Enter database name">
                             </div>
                             <div class="form-group">
-                                <label for="database-port">Port</label>
-                                <input type="number" id="database-port" placeholder="Enter database port">
+                                <label class="form-label" for="database-port">Port</label>
+                                <input class="form-control" type="number" id="database-port" placeholder="Enter database port">
                             </div>
                             <div class="form-group">
-                                <label for="database-host">Host</label>
-                                <input type="text" id="database-host" placeholder="Enter database host">
+                                <label class="form-label" for="database-host">Host</label>
+                                <input class="form-control" type="text" id="database-host" placeholder="Enter database host">
                             </div>
                             <div class="form-group">
-                                <label for="database-username">Username</label>
-                                <input type="text" id="database-username" placeholder="Enter database username">
+                                <label class="form-label" for="database-username">Username</label>
+                                <input class="form-control" type="text" id="database-username" placeholder="Enter database username">
                             </div>
                             <div class="form-group">
-                                <label for="database-password">Password</label>
-                                <input type="password" id="database-password" placeholder="Enter database password">
+                                <label class="form-label" for="database-password">Password</label>
+                                <input class="form-control" type="password" id="database-password" placeholder="Enter database password">
                             </div>
                         </div>
                     </div>
@@ -162,8 +162,8 @@
                         <h4>JPA Settings</h4>
                         <div class="form-groups">
                             <div class="form-group">
-                                <label for="ddl-auto">DDL Auto</label>
-                                <select id="ddl-auto">
+                                <label class="form-label" for="ddl-auto">DDL Auto</label>
+                                <select class="form-select" id="ddl-auto">
                                     <option value="NONE" selected>None</option>
                                     <option value="CREATE">Create</option>
                                     <option value="UPDATE">Update</option>
@@ -171,8 +171,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="show-sql">Show SQL</label>
-                                <select id="show-sql">
+                                <label class="form-label" for="show-sql">Show SQL</label>
+                                <select class="form-select" id="show-sql">
                                     <option value="true">True</option>
                                     <option value="false" selected>False</option>
                                 </select>
@@ -180,7 +180,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="buttons">
+                    <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center gap-2 p-2">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                             <path d="m176-120-56-56 301-302-181-45 198-123-17-234 179 151 216-88-87 217 151 178-234-16-124 198-45-181-301 301Zm24-520-80-80 80-80 80 80-80 80Zm355 197 48-79 93 7-60-71 35-86-86 35-71-59 7 92-79 49 90 22 23 90Zm165 323-80-80 80-80 80 80-80 80ZM569-570Z"/>
@@ -195,8 +195,8 @@
                 <div class="output-header d-flex justify-content-between align-items-center">
                     <h4>Generated Configuration</h4>
                     <div class="output-format-selector d-flex align-items-center gap-2">
-                        <label for="output-format">Format:</label>
-                        <select id="output-format">
+                        <label class="form-label" for="output-format">Format:</label>
+                        <select class="form-select" id="output-format">
                             <option value="application.properties" selected>application.properties</option>
                             <option value="application.yml">application.yml</option>
                         </select>
@@ -208,14 +208,14 @@
                 </div>
 
                 <div class="output-actions d-flex gap-3 mt-1">
-                    <button class="buttons d-flex justify-content-center align-items-center gap-2 flex-grow-1">
+                    <button id="download-btn" class="btn btn-secondary d-flex justify-content-center align-items-center gap-2 flex-grow-1 p-2">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                             <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/>
                         </svg>
                         Download
                     </button>
-                    <button class="buttons d-flex justify-content-center align-items-center gap-2 flex-grow-1">
+                    <button id="copy-btn" class="btn btn-secondary d-flex justify-content-center align-items-center gap-2 flex-grow-1 p-2">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                             <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-24<PASSWORD>"/>
