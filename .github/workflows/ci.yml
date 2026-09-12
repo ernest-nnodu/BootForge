@@ -57,7 +57,7 @@ jobs:
 
     - name: BootForge API smoke test
       run: |
-        curl --fail --silent --show-error \
+        RESPONSE=$(curl --fail --silent --show-error \
           --request POST \
           --header "Content-Type: application/json" \
           --data '{
@@ -75,7 +75,9 @@ jobs:
             },
             "outputFormat": "YAML"
           }' \
-        http://localhost:8000/api/v1/configurations
+        http://localhost:8000/api/v1/configurations)
+        
+        echo "RESPONSE: $RESPONSE"
 
     - name: Stop docker image
       if: always()
