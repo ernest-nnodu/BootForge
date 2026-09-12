@@ -79,11 +79,20 @@ jobs:
           }' \
         http://localhost:8000/api/v1/configurations)
         
-        if [ "$RESPONSE" -ne 200 ]; then
-          echo "BootForge API smoke test failed with status code $RESPONSE"
-          cat response.txt
+        echo "HTTP status: $RESPONSE"
+        echo "Response body:"
+        cat response.txt
+
+        if [ "$RESPONSE" -lt 200 ] || [ "$RESPONSE" -ge 300 ]; then
+          echo "Smoke test failed"
+    
+          echo "BootForge container logs:"
+          docker logs bootforge-api
+    
           exit 1
         fi
+
+        echo "Smoke test passed"
 
     - name: Stop docker image
       if: always()
