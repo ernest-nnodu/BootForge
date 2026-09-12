@@ -57,7 +57,7 @@ jobs:
 
     - name: BootForge API smoke test
       run: |
-        RESPONSE=$(curl --fail --silent --show-error \
+        RESPONSE=$(curl --silent --show-error \
           --output response.txt \
           --write-out "%{http_code}" \
           --request POST \
