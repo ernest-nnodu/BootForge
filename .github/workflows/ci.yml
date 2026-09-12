@@ -55,6 +55,28 @@ jobs:
         docker logs bootforge-api
         exit 1
 
+    - name: BootForge API smoke test
+      run: |
+        curl --fail --silent --show-error \
+          --request POST \
+          --header "Content-Type: application/json" \
+          --data '{
+            "applicationConfigRequest": {
+              "applicationName": "bootforge"
+            },
+            "serverConfigRequest": {
+              "port": 8000
+            },
+            "databaseConfigRequest": {
+              "databaseType": "POSTGRESQL",
+              "username": "postgres",
+              "password": "password",
+              "port": 5432
+            },
+            "outputFormat": "YAML"
+          }' \
+        http://localhost:8080/api/v1/configurations
+
     - name: Stop docker image
       if: always()
       run: docker rm -f bootforge-api || true
