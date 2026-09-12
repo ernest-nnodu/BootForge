@@ -77,7 +77,7 @@ jobs:
             },
             "outputFormat": "YAML"
           }' \
-        http://localhost:8000/api/v1/configurations)
+        http://localhost:8000/api/v1/configurations/generate)
         
         echo "HTTP status: $RESPONSE"
         echo "Response body:"
