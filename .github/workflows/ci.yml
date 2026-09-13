@@ -55,44 +55,43 @@ jobs:
         docker logs bootforge-api
         exit 1
 
-    - name: BootForge API smoke test
+    - name: API smoke test
       run: |
-        RESPONSE=$(curl --silent --show-error \
-          --output response.txt \
-          --write-out "%{http_code}" \
-          --request POST \
-          --header "Content-Type: application/json" \
-          --data '{
-            "applicationConfigRequest": {
-              "applicationName": "bootforge"
-            },
-            "serverConfigRequest": {
-              "port": 8000
-            },
-            "databaseConfigRequest": {
-              "databaseType": "POSTGRESQL",
-              "username": "postgres",
-              "password": "password",
-              "port": 5432
-            },
-            "outputFormat": "YAML"
-          }' \
+        HTTP_STATUS=$(
+        curl --silent --show-error \
+        --output response.txt \
+        --write-out "%{http_code}" \
+        --request POST \
+        --header "Content-Type: application/json" \
+        --data '{
+        "applicationConfigRequest": {
+          "applicationName": "bootforge"
+        },
+        "serverConfigRequest": {
+          "port": 8000
+        },
+        "databaseConfigRequest": {
+          "databaseType": "POSTGRESQL",
+          "username": "postgres",
+          "password": "password",
+          "port": 5432
+        },
+        "outputFormat": "YAML"
+        }' \
         http://localhost:8000/api/v1/configurations/generate)
         
-        echo "HTTP status: $RESPONSE"
+        echo "HTTP status: $HTTP_STATUS"
         echo "Response body:"
         cat response.txt
 
-        if [ "$RESPONSE" -lt 200 ] || [ "$RESPONSE" -ge 300 ]; then
-          echo "Smoke test failed"
-    
-          echo "BootForge container logs:"
+        if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+          echo "API smoke test failed"
+          echo "Container logs:"
           docker logs bootforge-api
-    
           exit 1
         fi
 
-        echo "Smoke test passed"
+        echo "API smoke test passed"
 
     - name: Stop docker image
       if: always()
