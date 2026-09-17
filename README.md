@@ -1,45 +1,293 @@
-# BootForge 🔥
+# BootForge
 
-BootForge is a backend-focused Spring Boot configuration generation service designed to help developers quickly create clean, production-ready configuration files.
+BootForge is a backend-focused Spring Boot service for generating production-ready Spring Boot configuration files.
 
-Instead of manually remembering dozens of Spring Boot properties, BootForge allows you to:
+It accepts structured configuration input, validates it, applies sensible defaults, and returns either `application.properties` or `application.yml` content.
 
-- Generate application.properties or application.yml
+## What It Generates
 
-- Configure database, JPA, logging, server, and actuator settings
+BootForge can generate configuration for:
 
-- Apply safe, opinionated defaults
-
-- Validate inputs to prevent common misconfigurations
-
-- Instantly preview and copy generated configuration
-
-BootForge is built with a clean domain-driven design approach and demonstrates:
-
-- Strong Java domain modeling
-
-- Strategy pattern for output formatting
-
-- Input validation and defensive configuration
-
-- Clean separation of concerns
-
-- Dockerized deployment
-
-## Why BootForge?
-
-Spring Boot applications often require repetitive setup and careful configuration. BootForge streamlines this process by providing a structured, validated way to generate configuration files that follow best practices.
-
-This project focuses on backend engineering principles rather than frontend complexity.
+- application name and active profile
+- server port and context path
+- datasource URL, username, and password
+- PostgreSQL or MySQL database settings
+- JPA and Hibernate settings
+- Hikari connection pool settings
+- logging levels
+- actuator endpoint exposure and health detail visibility
 
 ## Tech Stack
 
-- Java 17+
-
-- Spring Boot
-
+- Java 21
+- Spring Boot 4
+- Spring Web MVC
 - Jakarta Validation
-
-- Bootstrap (minimal UI)
-
+- Spring Boot Actuator
+- SnakeYAML
+- Maven
 - Docker
+
+## Project Structure
+
+```text
+src/main/java/com/jackalcode/BootForge
+├── controller   # REST API endpoints
+├── domain       # Core configuration models and enums
+├── dto          # Request payload records and validation
+├── exception    # API error responses and global exception handling
+├── formatter    # Properties and YAML output formatters
+├── mapper       # DTO-to-domain mapping
+└── service      # Configuration generation orchestration
+```
+
+## API
+
+### Generate Configuration
+
+```http
+POST /api/v1/configurations/generate
+Content-Type: application/json
+```
+
+### Example Request
+
+```json
+{
+  "applicationConfigRequest": {
+    "applicationName": "orders-service",
+    "activeProfile": "dev"
+  },
+  "serverConfigRequest": {
+    "port": 8080,
+    "contextPath": "/api"
+  },
+  "databaseConfigRequest": {
+    "databaseType": "POSTGRESQL",
+    "username": "postgres",
+    "password": "password",
+    "host": "localhost",
+    "databaseName": "orders",
+    "port": 5432
+  },
+  "jpaConfigRequest": {
+    "ddlAuto": "NONE",
+    "showSql": false,
+    "openInView": false
+  },
+  "hikariConfigRequest": {
+    "maximumPoolSize": 10,
+    "minimumIdle": 2,
+    "connectionTimeout": 30000
+  },
+  "loggingConfigRequest": {
+    "rootLevel": "INFO",
+    "springLevel": "INFO"
+  },
+  "actuatorConfigRequest": {
+    "exposedEndpoints": "health,info",
+    "showHealthDetails": "NEVER"
+  },
+  "outputFormat": "YAML"
+}
+```
+
+### Example Response
+
+```yaml
+spring:
+  application:
+    name: orders-service
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orders
+    username: postgres
+    password: password
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+```
+
+## Supported Options
+
+### Output Formats
+
+- `PROPERTIES`
+- `YAML`
+
+### Databases
+
+- `POSTGRESQL`
+- `MYSQL`
+
+### JPA DDL Modes
+
+- `NONE`
+- `CREATE`
+- `UPDATE`
+- `VALIDATE`
+
+### Log Levels
+
+- `TRACE`
+- `DEBUG`
+- `INFO`
+- `WARN`
+- `ERROR`
+
+## Defaults
+
+BootForge applies defaults when optional fields are not provided.
+
+| Setting | Default |
+| --- | --- |
+| Active profile | `default` |
+| Server port | `8080` |
+| Context path | `/` |
+| Database host | `localhost` |
+| Database name | `app_db` |
+| PostgreSQL port | `5432` |
+| MySQL port | `3306` |
+| JPA DDL auto | `NONE` |
+| JPA show SQL | `false` |
+| JPA open-in-view | `false` |
+| Hikari maximum pool size | `10` |
+| Hikari minimum idle | `2` |
+| Hikari connection timeout | `30000` |
+| Root log level | `INFO` |
+| Spring log level | `INFO` |
+| Actuator exposed endpoints | `health,info` |
+| Health details | `NEVER` |
+
+## Validation
+
+The API validates required input and rejects invalid configuration.
+
+Required sections:
+
+- `applicationConfigRequest`
+- `serverConfigRequest`
+- `databaseConfigRequest`
+- `outputFormat`
+
+Required database fields:
+
+- `databaseType`
+- `username`
+- `password`
+
+Port values must be between `1` and `65535`.
+
+Invalid requests return a `400 Bad Request` response with a structured error body.
+
+## Running Locally
+
+### Prerequisites
+
+- Java 21
+- Maven, or the included Maven wrapper
+
+### Start The Application
+
+```bash
+./mvnw spring-boot:run
+```
+
+On Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+The application starts on port `8080` by default.
+
+## Profiles
+
+The project includes separate configuration for development and production:
+
+- `application-dev.properties`
+- `application-prod.properties`
+
+You can run with a profile using:
+
+```bash
+SPRING_PROFILES_ACTIVE=prod ./mvnw spring-boot:run
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:SPRING_PROFILES_ACTIVE = "prod"
+.\mvnw.cmd spring-boot:run
+```
+
+## Health Checks
+
+Actuator is enabled for health monitoring.
+
+Useful endpoints:
+
+```http
+GET /actuator/health
+GET /actuator/health/liveness
+GET /actuator/health/readiness
+```
+
+## Docker
+
+Build the image:
+
+```bash
+docker build -t bootforge:local .
+```
+
+Run with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+The Compose setup exposes the service on port `8000`.
+
+## Testing
+
+Run the full test suite:
+
+```bash
+./mvnw clean verify
+```
+
+On Windows:
+
+```powershell
+.\mvnw.cmd clean verify
+```
+
+The test suite covers:
+
+- request validation
+- controller behavior
+- domain mapping
+- service orchestration
+- properties formatting
+- YAML formatting
+- integration flow
+
+## CI
+
+The GitHub Actions workflow runs on pushes and pull requests to `main`.
+
+It performs:
+
+- Java 21 setup
+- Maven build and verification
+- Docker image build
+- container startup
+- readiness check
+- API smoke test
+
+## License
+
+No license has been specified yet.
