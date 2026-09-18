@@ -1,12 +1,5 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: BootForge Build and Test CI
+name: BootForge CI/CD
 
 on:
   push:
@@ -34,10 +27,10 @@ jobs:
       run: mvn clean verify
 
     - name: Build docker image
-      run: docker build -t bootforge-api .
+      run: docker build -t bootforge-api:${{ github.sha }} .
 
     - name: Run docker image
-      run: docker run --detach --publish 8000:8000 --env SERVER_PORT=8000 --name bootforge-api bootforge-api
+      run: docker run --detach --publish 8000:8000 --env SERVER_PORT=8000 --name bootforge-api:${{ github.sha }} bootforge-api:${{ github.sha }}
 
     - name: Check BootForge API readiness
       run: |
@@ -52,7 +45,7 @@ jobs:
         done
         
         echo "BootForge API failed to start"
-        docker logs bootforge-api
+        docker logs bootforge-api:${{ github.sha }}
         exit 1
 
     - name: API smoke test
@@ -87,7 +80,7 @@ jobs:
         if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
           echo "API smoke test failed"
           echo "Container logs:"
-          docker logs bootforge-api
+          docker logs bootforge-api:${{ github.sha }}
           exit 1
         fi
 
@@ -95,6 +88,5 @@ jobs:
 
     - name: Stop docker image
       if: always()
-      run: docker rm -f bootforge-api || true
-
+      run: docker rm -f bootforge-api:${{ github.sha }} || true
 
