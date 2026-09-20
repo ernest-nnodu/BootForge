@@ -138,32 +138,14 @@ spring:
       connection-timeout: 30000
 ```
 
-## Supported Options
+## Supported Configuration
 
-### Output Formats
+BootForge currently supports:
 
-- `PROPERTIES`
-- `YAML`
-
-### Databases
-
-- `POSTGRESQL`
-- `MYSQL`
-
-### JPA DDL Modes
-
-- `NONE`
-- `CREATE`
-- `UPDATE`
-- `VALIDATE`
-
-### Log Levels
-
-- `TRACE`
-- `DEBUG`
-- `INFO`
-- `WARN`
-- `ERROR`
+- **Output formats:** `PROPERTIES`, `YAML`
+- **Databases:** `POSTGRESQL`, `MYSQL`
+- **JPA DDL modes:** `NONE`, `CREATE`, `UPDATE`, `VALIDATE`
+- **Log levels:** `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`
 
 ## Defaults
 
@@ -191,24 +173,19 @@ BootForge applies defaults when optional fields are not provided.
 
 ## Validation
 
-The API validates required input and rejects invalid configuration.
+BootForge validates incoming requests using Jakarta Bean Validation before configuration generation.
 
-Required sections:
+Required configuration includes:
 
-- `applicationConfigRequest`
-- `serverConfigRequest`
-- `databaseConfigRequest`
-- `outputFormat`
-
-Required database fields:
-
-- `databaseType`
-- `username`
-- `password`
+- application configuration
+- server configuration
+- database configuration
+- output format
+- database type, username, and password
 
 Port values must be between `1` and `65535`.
 
-Invalid requests return a `400 Bad Request` response with a structured error body.
+Invalid input returns `400 Bad Request` with a structured error response handled through centralized exception handling.
 
 ## Running Locally
 
