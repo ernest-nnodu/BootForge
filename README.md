@@ -70,12 +70,13 @@ src/main/java/com/jackalcode/BootForge
 
 ## API
 
-### Generate Configuration
+BootForge exposes a REST API for generating Spring Boot configuration from a JSON request.
 
-```http
-POST /api/v1/configurations/generate
-Content-Type: application/json
-```
+### Endpoint
+
+`POST /api/v1/configurations/generate`
+
+The request defines the required configuration sections and desired output format. The API validates the input, maps it to the internal configuration model, and returns the generated YAML or `.properties` content.
 
 ### Example Request
 
