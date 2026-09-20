@@ -246,19 +246,33 @@ GET /actuator/health/readiness
 
 ## Docker
 
-Build the image:
+BootForge can be built and run as a Docker container.
+
+### Build the Image
 
 ```bash
 docker build -t bootforge:local .
 ```
 
-Run with Docker Compose:
+### Run with Docker Compose
 
 ```bash
 docker compose up --build
 ```
 
-The Compose setup exposes the service on port `8000`.
+Docker Compose builds the application image, starts the BootForge service, and exposes the application on port `8000`.
+
+Once running, the API is available at:
+
+```text
+http://localhost:8000/api/v1/configurations/generate
+```
+
+Stop the application with:
+
+```bash
+docker compose down
+```
 
 ## Testing
 
