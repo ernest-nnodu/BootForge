@@ -1,8 +1,14 @@
 # BootForge
 
-BootForge is a backend-focused Spring Boot service for generating production-ready Spring Boot configuration files.
+BootForge is a Spring Boot configuration generator that creates ready-to-use `application.properties` and `application.yml` configuration data from structured configuration options.
 
-It accepts structured configuration input, validates it, applies sensible defaults, and returns either `application.properties` or `application.yml` content.
+Built as a production-oriented Java backend project, BootForge demonstrates REST API design, input validation, automated testing, containerisation, CI and cloud deployment.
+
+## Live Application
+
+BootForge is deployed on Render:
+
+[Try BootForge](https://bootforge.onrender.com)
 
 ## What It Generates
 
