@@ -37,14 +37,15 @@ BootForge can generate configuration for:
 
 ## Tech Stack
 
-- Java 21
-- Spring Boot 4
-- Spring Web MVC
-- Jakarta Validation
-- Spring Boot Actuator
-- SnakeYAML
-- Maven
-- Docker
+- **Backend:** Java 21, Spring Boot 4, Spring Web MVC
+- **Validation:** Jakarta Bean Validation
+- **Configuration:** SnakeYAML
+- **Testing:** JUnit 5, Mockito, MockMvc
+- **Build:** Maven
+- **Containerisation:** Docker, Docker Compose
+- **CI:** GitHub Actions
+- **Observability:** Spring Boot Actuator
+- **Deployment:** Render
 
 ## Project Structure
 
