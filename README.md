@@ -276,13 +276,15 @@ docker compose down
 
 ## Testing
 
-Run the full test suite:
+BootForge includes automated tests across the controller, service, mapping, formatting, and application integration layers.
+
+Run the complete test suite with:
 
 ```bash
 ./mvnw clean verify
 ```
 
-On Windows:
+Windows:
 
 ```powershell
 .\mvnw.cmd clean verify
@@ -290,13 +292,14 @@ On Windows:
 
 The test suite covers:
 
-- request validation
-- controller behavior
-- domain mapping
+- request validation and invalid input handling
+- controller behaviour and HTTP responses
+- DTO-to-domain configuration mapping
+- default configuration values
 - service orchestration
-- properties formatting
-- YAML formatting
-- integration flow
+- `.properties` generation
+- YAML structure and generation
+- application integration flow
 
 ## CI
 
