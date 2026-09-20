@@ -187,14 +187,16 @@ Port values must be between `1` and `65535`.
 
 Invalid input returns `400 Bad Request` with a structured error response handled through centralized exception handling.
 
-## Running Locally
+## Getting Started
 
 ### Prerequisites
 
 - Java 21
-- Maven, or the included Maven wrapper
+- Maven, or use the included Maven Wrapper
 
-### Start The Application
+### Run Locally
+
+macOS/Linux:
 
 ```bash
 ./mvnw spring-boot:run
@@ -208,14 +210,16 @@ On Windows:
 
 The application starts on port `8080` by default.
 
-## Profiles
+### Application Profiles
 
-The project includes separate configuration for development and production:
+BootForge provides separate configuration for development and production environments:
 
 - `application-dev.properties`
 - `application-prod.properties`
 
-You can run with a profile using:
+To run using the production profile:
+
+macOS/Linux:
 
 ```bash
 SPRING_PROFILES_ACTIVE=prod ./mvnw spring-boot:run
