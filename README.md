@@ -345,6 +345,9 @@ Production Deployment
 
 The deployed application can be accessed from the live application link at the top of this README.
 
-## License
+## Future Improvements
 
-No license has been specified yet.
+Potential future enhancements include:
+
+- support for additional databases and configuration sections
+- reusable configuration templates
