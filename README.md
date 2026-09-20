@@ -234,15 +234,19 @@ $env:SPRING_PROFILES_ACTIVE = "prod"
 
 ## Health Checks
 
-Actuator is enabled for health monitoring.
+BootForge uses Spring Boot Actuator to expose application health information for container and deployment monitoring.
 
-Useful endpoints:
+Available health endpoints include:
 
-```http
+```text
 GET /actuator/health
 GET /actuator/health/liveness
 GET /actuator/health/readiness
 ```
+
+The readiness endpoint is used by the CI pipeline to verify that the application is ready to accept requests before the API smoke test is executed.
+
+Liveness and readiness probes also provide health information that can be used by container orchestration and cloud deployment environments.
 
 ## Docker
 
@@ -318,6 +322,28 @@ The CI pipeline performs:
 The smoke test sends a real `POST` request to the configuration generation endpoint and verifies that the application returns a successful HTTP response.
 
 Deployment is handled through Render's GitHub integration, with the production service deployed from the main branch.
+
+## Deployment
+
+BootForge is deployed to Render as a containerised web service.
+
+Production configuration is supplied through environment variables rather than being hard-coded into the application image. The production Spring profile provides environment-specific application settings.
+
+Deployment flow:
+
+```text
+Push/Merge to main
+        ↓
+GitHub Actions CI
+        ↓
+Build, Test and Container Validation
+        ↓
+Render GitHub Integration
+        ↓
+Production Deployment
+```
+
+The deployed application can be accessed from the live application link at the top of this README.
 
 ## License
 
