@@ -47,7 +47,15 @@ BootForge can generate configuration for:
 - **Observability:** Spring Boot Actuator
 - **Deployment:** Render
 
-## Project Structure
+## Architecture
+
+BootForge uses a layered architecture that separates HTTP concerns, application orchestration, domain configuration, object mapping, and output formatting.
+
+The request flow is:
+
+`HTTP Request → Controller → Service → Mapper → Domain Model → Formatter → Generated Configuration`
+
+The formatter abstraction allows the service layer to generate different output formats without coupling configuration generation to YAML or `.properties` formatting.
 
 ```text
 src/main/java/com/jackalcode/BootForge
