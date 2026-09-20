@@ -301,18 +301,23 @@ The test suite covers:
 - YAML structure and generation
 - application integration flow
 
-## CI
+## CI/CD
 
-The GitHub Actions workflow runs on pushes and pull requests to `main`.
+BootForge uses GitHub Actions to automatically validate changes pushed to the repository and changes proposed through pull requests.
 
-It performs:
+The CI pipeline performs:
 
-- Java 21 setup
-- Maven build and verification
-- Docker image build
-- container startup
-- readiness check
-- API smoke test
+1. Java 21 environment setup
+2. Maven build and automated test verification
+3. Docker image build
+4. BootForge container startup
+5. Actuator readiness check
+6. API smoke test against the running container
+7. Container cleanup
+
+The smoke test sends a real `POST` request to the configuration generation endpoint and verifies that the application returns a successful HTTP response.
+
+Deployment is handled through Render's GitHub integration, with the production service deployed from the main branch.
 
 ## License
 
