@@ -10,6 +10,18 @@ BootForge is deployed on Render:
 
 [Try BootForge](https://bootforge.onrender.com)
 
+## Engineering Highlights
+
+- Layered Spring Boot architecture with clear separation between API, service, mapping, domain, and formatting responsibilities
+- Strategy-based formatting supporting both YAML and `.properties` output
+- Jakarta Bean Validation with centralized API exception handling
+- Automated unit, controller, formatter, and integration testing
+- Multi-stage Docker build with container health monitoring
+- Spring Boot Actuator readiness and liveness probes
+- GitHub Actions CI covering Maven verification, Docker image build, container startup, readiness validation, and API smoke testing
+- Environment-driven configuration for development and production
+- Cloud deployment on Render
+
 ## What It Generates
 
 BootForge can generate configuration for:
