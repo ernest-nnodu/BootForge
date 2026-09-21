@@ -12,20 +12,8 @@
 	<artifactId>BootForge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>BootForge</name>
-	<description>BootForge Project</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<description>Spring Boot configuration generator for YAML and properties configuration</description>
+
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -45,12 +33,6 @@
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
