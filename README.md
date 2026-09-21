@@ -1,6 +1,6 @@
 # BootForge
 
-BootForge is a Spring Boot configuration generator that creates ready-to-use `application.properties` and `application.yml` configuration data from structured configuration options.
+BootForge is a Spring Boot configuration generator that creates ready-to-use `application.properties` and `application.yml` configuration content from structured configuration options.
 
 Built as a production-oriented Java backend project, BootForge demonstrates REST API design, input validation, automated testing, containerisation, CI and cloud deployment.
 
@@ -12,15 +12,12 @@ BootForge is deployed on Render:
 
 ## Engineering Highlights
 
-- Layered Spring Boot architecture with clear separation between API, service, mapping, domain, and formatting responsibilities
-- Strategy-based formatting supporting both YAML and `.properties` output
+- Layered Spring Boot architecture separating API, service, mapping, domain, and formatting responsibilities
+- Strategy-based formatting supporting YAML and `.properties` output
 - Jakarta Bean Validation with centralized API exception handling
 - Automated unit, controller, formatter, and integration testing
-- Multi-stage Docker build with container health monitoring
-- Spring Boot Actuator readiness and liveness probes
-- GitHub Actions CI covering Maven verification, Docker image build, container startup, readiness validation, and API smoke testing
-- Environment-driven configuration for development and production
-- Cloud deployment on Render
+- Multi-stage Docker containerisation with Actuator readiness and liveness monitoring
+- GitHub Actions CI with Maven verification, Docker build, container startup, readiness validation, and API smoke testing
 
 ## What It Generates
 
@@ -192,7 +189,7 @@ Invalid input returns `400 Bad Request` with a structured error response handled
 ### Prerequisites
 
 - Java 21
-- Maven, or use the included Maven Wrapper
+- Docker and Docker Compose (for containerised execution)
 
 ### Run Locally
 
