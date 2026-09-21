@@ -16,7 +16,7 @@ BootForge is deployed on Render:
 - Strategy-based formatting supporting YAML and `.properties` output
 - Jakarta Bean Validation with centralized API exception handling
 - Automated unit, controller, formatter, and integration testing
-- Multi-stage Docker containerisation with Actuator readiness and liveness monitoring
+- Multi-stage Docker containerisation with Actuator readiness and liveness endpoints
 - GitHub Actions CI with Maven verification, Docker build, container startup, readiness validation, and API smoke testing
 
 ## What It Generates
