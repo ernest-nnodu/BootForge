@@ -6,7 +6,7 @@ RUN --mount=type=cache,target=/root/.m2 \
     mvn dependency:go-offline
 COPY src ./src
 RUN --mount=type=cache,target=/root/.m2 \
-        mvn clean package -DskipTests
+        mvn package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 RUN addgroup -S app && adduser -S app -G app
