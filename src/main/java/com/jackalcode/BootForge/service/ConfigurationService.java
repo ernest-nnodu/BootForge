@@ -1,6 +1,7 @@
 package com.jackalcode.BootForge.service;
 
 import com.jackalcode.BootForge.domain.model.Configuration;
+import com.jackalcode.BootForge.dto.ConfigResponse;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
 import com.jackalcode.BootForge.formatter.PropertiesFormatter;
 import com.jackalcode.BootForge.formatter.YamlFormatter;
@@ -22,17 +23,18 @@ public class ConfigurationService {
         this.configurationMapper = configurationMapper;
     }
 
-    public String generateConfiguration(GenerateConfigRequest configRequest) {
+    public ConfigResponse generateConfiguration(GenerateConfigRequest configRequest) {
 
         Configuration config = configurationMapper.toConfiguration(configRequest);
-        String configuration;
 
-       switch (configRequest.outputFormat()) {
-            case PROPERTIES -> configuration = propertiesFormatter.format(config);
-            case YAML -> configuration = yamlFormatter.format(config);
-            default -> throw new IllegalArgumentException("Format not supported");
-        }
+       String content = switch (configRequest.outputFormat()) {
+            case PROPERTIES -> propertiesFormatter.format(config);
+            case YAML -> yamlFormatter.format(config);
+       };
 
-        return configuration;
+        return new ConfigResponse(
+                configRequest.outputFormat(),
+                content
+        );
     }
 }

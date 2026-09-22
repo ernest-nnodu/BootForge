@@ -12,7 +12,7 @@ public class ConfigurationTestHelper {
                 toServerConfiguration(request.serverConfigRequest()),
                 toDatabaseConfiguration(request.databaseConfigRequest()),
                 toJpaConfiguration(request.jpaConfigRequest()),
-                toHikariCOnfiguration(request.hikariConfigRequest()),
+                toHikariConfiguration(request.hikariConfigRequest()),
                 toLoggingConfiguration(request.loggingConfigRequest()),
                 toActuatorConfiguration(request.actuatorConfigRequest())
         );
@@ -42,7 +42,7 @@ public class ConfigurationTestHelper {
         );
     }
 
-    private static HikariConfig toHikariCOnfiguration(HikariConfigRequest hikariConfigRequest) {
+    private static HikariConfig toHikariConfiguration(HikariConfigRequest hikariConfigRequest) {
 
         if (hikariConfigRequest == null) {
             return new HikariConfig(null, null, null);

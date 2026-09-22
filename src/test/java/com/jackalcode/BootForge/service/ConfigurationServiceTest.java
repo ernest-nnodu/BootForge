@@ -4,6 +4,7 @@ import com.jackalcode.BootForge.common.ConfigurationTestHelper;
 import com.jackalcode.BootForge.common.GenerateConfigRequestTestHelper;
 import com.jackalcode.BootForge.common.RequestProps;
 import com.jackalcode.BootForge.domain.enums.*;
+import com.jackalcode.BootForge.dto.ConfigResponse;
 import com.jackalcode.BootForge.formatter.PropertiesFormatter;
 import com.jackalcode.BootForge.formatter.YamlFormatter;
 import com.jackalcode.BootForge.mapper.ConfigurationMapper;
@@ -50,7 +51,7 @@ public class ConfigurationServiceTest {
         var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(requestProps);
         var configuration = ConfigurationTestHelper.toConfiguration(configRequest);
 
-        String expectedProperties = """
+        String expectedContent = """
                 spring.application.name=boot-forge
                 server.port=8080
                 spring.datasource.username=test-user
@@ -58,16 +59,19 @@ public class ConfigurationServiceTest {
                 spring.datasource.url=jdbc:postgresql://test-host:5555/test-db
                 """;
 
+        var expectedProperties = new ConfigResponse(OutputFormat.PROPERTIES, expectedContent);
+
         when(configurationMapper.toConfiguration(configRequest))
                 .thenReturn(configuration);
 
         when(propertiesFormatter.format(configuration))
-                .thenReturn(expectedProperties);
+                .thenReturn(expectedContent);
 
-        String result = configurationService.generateConfiguration(configRequest);
+        var result = configurationService.generateConfiguration(configRequest);
 
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(expectedProperties);
+        assertThat(result.format()).isEqualTo(expectedProperties.format());
+        assertThat(result.content()).isEqualTo(expectedProperties.content());
 
         verify(configurationMapper).toConfiguration(configRequest);
         verify(propertiesFormatter).format(configuration);
@@ -91,7 +95,7 @@ public class ConfigurationServiceTest {
         var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(requestProps);
         var configuration = ConfigurationTestHelper.toConfiguration(configRequest);
 
-        String expectedYaml = """
+        String expectedContent = """
         spring:
           application:
             name: bootforge
@@ -113,15 +117,18 @@ public class ConfigurationServiceTest {
           port: 8080
         """;
 
+        var expectedYaml = new ConfigResponse(OutputFormat.YAML, expectedContent);
+
         when(configurationMapper.toConfiguration(configRequest))
                 .thenReturn(configuration);
         when(yamlFormatter.format(configuration))
-                .thenReturn(expectedYaml);
+                .thenReturn(expectedContent);
 
         var result = configurationService.generateConfiguration(configRequest);
 
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(expectedYaml);
+        assertThat(result.format()).isEqualTo(expectedYaml.format());
+        assertThat(result.content()).isEqualTo(expectedYaml.content());
 
         verify(configurationMapper).toConfiguration(configRequest);
         verify(yamlFormatter).format(configuration);

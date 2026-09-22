@@ -22,8 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ConfigurationController.class)
 public class ConfigurationControllerTest {
@@ -64,7 +63,9 @@ public class ConfigurationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(configRequest)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(expectedResponse));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.format").value(expectedResponse.format().toString()))
+                .andExpect(jsonPath("$.content").value(expectedResponse.content()));
 
         verify(configurationService).generateConfiguration(configRequest);
     }
@@ -94,7 +95,9 @@ public class ConfigurationControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(configRequest)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(expectedResponse));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.format").value(expectedResponse.format().toString()))
+                .andExpect(jsonPath("$.content").value(expectedResponse.content()));
 
         verify(configurationService).generateConfiguration(configRequest);
     }

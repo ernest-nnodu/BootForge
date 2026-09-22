@@ -1,13 +1,14 @@
 package com.jackalcode.BootForge.common;
 
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
+import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.dto.*;
 
 import java.util.Map;
 
 public class YamlResponseTestHelper {
 
-    public static String expectedYaml(GenerateConfigRequest request) {
+    public static ConfigResponse expectedYaml(GenerateConfigRequest request) {
 
         StringBuilder yaml = new StringBuilder();
 
@@ -18,7 +19,7 @@ public class YamlResponseTestHelper {
         appendLogging(yaml, request.loggingConfigRequest());
         appendActuator(yaml, request.actuatorConfigRequest());
 
-        return yaml.toString();
+        return new ConfigResponse(OutputFormat.YAML, yaml.toString().stripTrailing());
     }
 
     public static Map<String, Object> mapAt(Map<String, Object> parent, String key) {

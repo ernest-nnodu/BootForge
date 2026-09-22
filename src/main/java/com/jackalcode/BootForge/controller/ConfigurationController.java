@@ -1,5 +1,6 @@
 package com.jackalcode.BootForge.controller;
 
+import com.jackalcode.BootForge.dto.ConfigResponse;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
 import com.jackalcode.BootForge.service.ConfigurationService;
 import jakarta.validation.Valid;
@@ -20,10 +21,10 @@ public class ConfigurationController {
     }
 
     @PostMapping(path = "/generate")
-    public ResponseEntity<String> generateConfig(
+    public ResponseEntity<ConfigResponse> generateConfig(
             @RequestBody @Valid GenerateConfigRequest configRequest) {
 
-        String configResponse = configurationService.generateConfiguration(configRequest);
-        return ResponseEntity.ok(configResponse);
+        var response = configurationService.generateConfiguration(configRequest);
+        return ResponseEntity.ok(response);
     }
 }
