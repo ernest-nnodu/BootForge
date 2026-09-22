@@ -3,23 +3,20 @@ package com.jackalcode.BootForge.service;
 import com.jackalcode.BootForge.domain.model.Configuration;
 import com.jackalcode.BootForge.dto.ConfigResponse;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
-import com.jackalcode.BootForge.formatter.PropertiesFormatter;
-import com.jackalcode.BootForge.formatter.YamlFormatter;
+import com.jackalcode.BootForge.formatter.ConfigFormatter;
 import com.jackalcode.BootForge.mapper.ConfigurationMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ConfigurationService {
 
-    private final PropertiesFormatter propertiesFormatter;
-    private final YamlFormatter yamlFormatter;
+    private final List<ConfigFormatter> formatters;
     private final ConfigurationMapper configurationMapper;
 
-    public ConfigurationService(PropertiesFormatter propertiesFormatter,
-                                YamlFormatter yamlFormatter,
-                                ConfigurationMapper configurationMapper) {
-        this.propertiesFormatter = propertiesFormatter;
-        this.yamlFormatter = yamlFormatter;
+    public ConfigurationService(List<ConfigFormatter> formatters, ConfigurationMapper configurationMapper) {
+        this.formatters = formatters;
         this.configurationMapper = configurationMapper;
     }
 
@@ -27,10 +24,13 @@ public class ConfigurationService {
 
         Configuration config = configurationMapper.toConfiguration(configRequest);
 
-       String content = switch (configRequest.outputFormat()) {
-            case PROPERTIES -> propertiesFormatter.format(config);
-            case YAML -> yamlFormatter.format(config);
-       };
+        //Select a formatter based on the output format
+        ConfigFormatter formatter = formatters.stream()
+                .filter(f -> f.getFormat().equals(configRequest.outputFormat()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unsupported output format: " + configRequest.outputFormat()));
+
+        String content = formatter.format(config);
 
         return new ConfigResponse(
                 configRequest.outputFormat(),
