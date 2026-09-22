@@ -3,6 +3,7 @@ package com.jackalcode.BootForge.service;
 import com.jackalcode.BootForge.domain.model.Configuration;
 import com.jackalcode.BootForge.dto.ConfigResponse;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
+import com.jackalcode.BootForge.exception.UnsupportedFormatException;
 import com.jackalcode.BootForge.formatter.ConfigFormatter;
 import com.jackalcode.BootForge.mapper.ConfigurationMapper;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ConfigurationService {
         ConfigFormatter formatter = formatters.stream()
                 .filter(f -> f.getFormat().equals(configRequest.outputFormat()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unsupported output format: " + configRequest.outputFormat()));
+                .orElseThrow(() -> new UnsupportedFormatException(configRequest.outputFormat()));
 
         String content = formatter.format(config);
 
