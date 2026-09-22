@@ -3,6 +3,7 @@ package com.jackalcode.BootForge.integration;
 import com.jackalcode.BootForge.common.GenerateConfigRequestTestHelper;
 import com.jackalcode.BootForge.common.RequestProps;
 import com.jackalcode.BootForge.domain.enums.*;
+import com.jackalcode.BootForge.dto.ConfigResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,8 +134,12 @@ public class ConfigurationIntegrationTest {
                 .andReturn();
 
         var response = result.getResponse().getContentAsString();
+        var configResponse = objectMapper.readValue(response, ConfigResponse.class);
 
-        Map<String, Object> root = yaml.load(response);
+        assertThat(configResponse).isNotNull();
+        assertThat(configResponse.format()).isEqualTo(OutputFormat.YAML);
+
+        Map<String, Object> root = yaml.load(configResponse.content());
         assertThat(root).containsKeys(
                 "spring",
                 "server",

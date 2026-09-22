@@ -1,5 +1,6 @@
 package com.jackalcode.BootForge.formatter;
 
+import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.formatter.util.FormatterUtil;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,11 @@ import java.util.Map;
 
 @Component
 public class YamlFormatter implements ConfigFormatter {
+
+    @Override
+    public OutputFormat getFormat() {
+        return OutputFormat.YAML;
+    }
 
     @Override
     public String format(Configuration configuration) {

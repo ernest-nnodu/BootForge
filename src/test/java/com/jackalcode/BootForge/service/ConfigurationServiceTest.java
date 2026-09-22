@@ -4,15 +4,18 @@ import com.jackalcode.BootForge.common.ConfigurationTestHelper;
 import com.jackalcode.BootForge.common.GenerateConfigRequestTestHelper;
 import com.jackalcode.BootForge.common.RequestProps;
 import com.jackalcode.BootForge.domain.enums.*;
+import com.jackalcode.BootForge.dto.ConfigResponse;
 import com.jackalcode.BootForge.formatter.PropertiesFormatter;
 import com.jackalcode.BootForge.formatter.YamlFormatter;
 import com.jackalcode.BootForge.mapper.ConfigurationMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -30,8 +33,15 @@ public class ConfigurationServiceTest {
     @Mock
     private ConfigurationMapper configurationMapper;
 
-    @InjectMocks
     private ConfigurationService configurationService;
+
+    @BeforeEach
+    void setUp() {
+
+        configurationService = new ConfigurationService(
+                List.of(propertiesFormatter, yamlFormatter),
+                configurationMapper);
+    }
 
     @Test
     @DisplayName("generateConfiguration generates properties configuration when output format is properties")
@@ -50,7 +60,7 @@ public class ConfigurationServiceTest {
         var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(requestProps);
         var configuration = ConfigurationTestHelper.toConfiguration(configRequest);
 
-        String expectedProperties = """
+        String expectedContent = """
                 spring.application.name=boot-forge
                 server.port=8080
                 spring.datasource.username=test-user
@@ -58,20 +68,25 @@ public class ConfigurationServiceTest {
                 spring.datasource.url=jdbc:postgresql://test-host:5555/test-db
                 """;
 
+        var expectedProperties = new ConfigResponse(OutputFormat.PROPERTIES, expectedContent);
+
+        when(propertiesFormatter.getFormat()).thenReturn(OutputFormat.PROPERTIES);
+
         when(configurationMapper.toConfiguration(configRequest))
                 .thenReturn(configuration);
 
         when(propertiesFormatter.format(configuration))
-                .thenReturn(expectedProperties);
+                .thenReturn(expectedContent);
 
-        String result = configurationService.generateConfiguration(configRequest);
+        var result = configurationService.generateConfiguration(configRequest);
 
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(expectedProperties);
+        assertThat(result.format()).isEqualTo(expectedProperties.format());
+        assertThat(result.content()).isEqualTo(expectedProperties.content());
 
         verify(configurationMapper).toConfiguration(configRequest);
         verify(propertiesFormatter).format(configuration);
-        verifyNoInteractions(yamlFormatter);
+        verifyNoMoreInteractions(yamlFormatter);
     }
 
     @Test
@@ -91,7 +106,7 @@ public class ConfigurationServiceTest {
         var configRequest = GenerateConfigRequestTestHelper.generateConfigRequest(requestProps);
         var configuration = ConfigurationTestHelper.toConfiguration(configRequest);
 
-        String expectedYaml = """
+        String expectedContent = """
         spring:
           application:
             name: bootforge
@@ -113,18 +128,23 @@ public class ConfigurationServiceTest {
           port: 8080
         """;
 
+        var expectedYaml = new ConfigResponse(OutputFormat.YAML, expectedContent);
+
+        when(propertiesFormatter.getFormat()).thenReturn(OutputFormat.PROPERTIES);
+        when(yamlFormatter.getFormat()).thenReturn(OutputFormat.YAML);
         when(configurationMapper.toConfiguration(configRequest))
                 .thenReturn(configuration);
         when(yamlFormatter.format(configuration))
-                .thenReturn(expectedYaml);
+                .thenReturn(expectedContent);
 
         var result = configurationService.generateConfiguration(configRequest);
 
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(expectedYaml);
+        assertThat(result.format()).isEqualTo(expectedYaml.format());
+        assertThat(result.content()).isEqualTo(expectedYaml.content());
 
         verify(configurationMapper).toConfiguration(configRequest);
         verify(yamlFormatter).format(configuration);
-        verifyNoInteractions(propertiesFormatter);
+        verifyNoMoreInteractions(propertiesFormatter);
     }
 }
