@@ -1,3 +1,22 @@
+# Build output
 target/
+
+# Version control
 .git/
+.github/
+
+# IDE files
 .idea/
+.vscode/
+*.iml
+
+# Local environment and secrets
+.env
+.env.*
+
+# Documentation
+README.md
+Specs.md
+
+# Frontend
+Frontend/

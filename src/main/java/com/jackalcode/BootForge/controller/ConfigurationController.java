@@ -3,7 +3,6 @@ package com.jackalcode.BootForge.controller;
 import com.jackalcode.BootForge.dto.GenerateConfigRequest;
 import com.jackalcode.BootForge.service.ConfigurationService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +24,6 @@ public class ConfigurationController {
             @RequestBody @Valid GenerateConfigRequest configRequest) {
 
         String configResponse = configurationService.generateConfiguration(configRequest);
-        return new ResponseEntity<>(configResponse, HttpStatus.OK);
+        return ResponseEntity.ok(configResponse);
     }
 }

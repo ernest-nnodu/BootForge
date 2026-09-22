@@ -1,6 +1,6 @@
 # BootForge
 
-BootForge is a Spring Boot configuration generator that creates ready-to-use `application.properties` and `application.yml` configuration data from structured configuration options.
+BootForge is a Spring Boot configuration generator that creates ready-to-use `application.properties` and `application.yml` configuration content from structured configuration options.
 
 Built as a production-oriented Java backend project, BootForge demonstrates REST API design, input validation, automated testing, containerisation, CI and cloud deployment.
 
@@ -12,15 +12,12 @@ BootForge is deployed on Render:
 
 ## Engineering Highlights
 
-- Layered Spring Boot architecture with clear separation between API, service, mapping, domain, and formatting responsibilities
-- Strategy-based formatting supporting both YAML and `.properties` output
+- Layered Spring Boot architecture separating API, service, mapping, domain, and formatting responsibilities
+- Strategy-based formatting supporting YAML and `.properties` output
 - Jakarta Bean Validation with centralized API exception handling
 - Automated unit, controller, formatter, and integration testing
-- Multi-stage Docker build with container health monitoring
-- Spring Boot Actuator readiness and liveness probes
-- GitHub Actions CI covering Maven verification, Docker image build, container startup, readiness validation, and API smoke testing
-- Environment-driven configuration for development and production
-- Cloud deployment on Render
+- Multi-stage Docker containerisation with Actuator readiness and liveness endpoints
+- GitHub Actions CI with Maven verification, Docker build, container startup, readiness validation, and API smoke testing
 
 ## What It Generates
 
@@ -138,32 +135,14 @@ spring:
       connection-timeout: 30000
 ```
 
-## Supported Options
+## Supported Configuration
 
-### Output Formats
+BootForge currently supports:
 
-- `PROPERTIES`
-- `YAML`
-
-### Databases
-
-- `POSTGRESQL`
-- `MYSQL`
-
-### JPA DDL Modes
-
-- `NONE`
-- `CREATE`
-- `UPDATE`
-- `VALIDATE`
-
-### Log Levels
-
-- `TRACE`
-- `DEBUG`
-- `INFO`
-- `WARN`
-- `ERROR`
+- **Output formats:** `PROPERTIES`, `YAML`
+- **Databases:** `POSTGRESQL`, `MYSQL`
+- **JPA DDL modes:** `NONE`, `CREATE`, `UPDATE`, `VALIDATE`
+- **Log levels:** `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`
 
 ## Defaults
 
@@ -191,33 +170,30 @@ BootForge applies defaults when optional fields are not provided.
 
 ## Validation
 
-The API validates required input and rejects invalid configuration.
+BootForge validates incoming requests using Jakarta Bean Validation before configuration generation.
 
-Required sections:
+Required configuration includes:
 
-- `applicationConfigRequest`
-- `serverConfigRequest`
-- `databaseConfigRequest`
-- `outputFormat`
-
-Required database fields:
-
-- `databaseType`
-- `username`
-- `password`
+- application configuration
+- server configuration
+- database configuration
+- output format
+- database type, username, and password
 
 Port values must be between `1` and `65535`.
 
-Invalid requests return a `400 Bad Request` response with a structured error body.
+Invalid input returns `400 Bad Request` with a structured error response handled through centralized exception handling.
 
-## Running Locally
+## Getting Started
 
 ### Prerequisites
 
 - Java 21
-- Maven, or the included Maven wrapper
+- Docker and Docker Compose (for containerised execution)
 
-### Start The Application
+### Run Locally
+
+macOS/Linux:
 
 ```bash
 ./mvnw spring-boot:run
@@ -231,14 +207,16 @@ On Windows:
 
 The application starts on port `8080` by default.
 
-## Profiles
+### Application Profiles
 
-The project includes separate configuration for development and production:
+BootForge provides separate configuration for development and production environments:
 
 - `application-dev.properties`
 - `application-prod.properties`
 
-You can run with a profile using:
+To run using the production profile:
+
+macOS/Linux:
 
 ```bash
 SPRING_PROFILES_ACTIVE=prod ./mvnw spring-boot:run
@@ -253,41 +231,61 @@ $env:SPRING_PROFILES_ACTIVE = "prod"
 
 ## Health Checks
 
-Actuator is enabled for health monitoring.
+BootForge uses Spring Boot Actuator to expose application health information for container and deployment monitoring.
 
-Useful endpoints:
+Available health endpoints include:
 
-```http
+```text
 GET /actuator/health
 GET /actuator/health/liveness
 GET /actuator/health/readiness
 ```
 
+The readiness endpoint is used by the CI pipeline to verify that the application is ready to accept requests before the API smoke test is executed.
+
+Liveness and readiness probes also provide health information that can be used by container orchestration and cloud deployment environments.
+
 ## Docker
 
-Build the image:
+BootForge can be built and run as a Docker container.
+
+### Build the Image
 
 ```bash
 docker build -t bootforge:local .
 ```
 
-Run with Docker Compose:
+### Run with Docker Compose
 
 ```bash
 docker compose up --build
 ```
 
-The Compose setup exposes the service on port `8000`.
+Docker Compose builds the application image, starts the BootForge service, and exposes the application on port `8000`.
+
+Once running, the API is available at:
+
+```text
+http://localhost:8000/api/v1/configurations/generate
+```
+
+Stop the application with:
+
+```bash
+docker compose down
+```
 
 ## Testing
 
-Run the full test suite:
+BootForge includes automated tests across the controller, service, mapping, formatting, and application integration layers.
+
+Run the complete test suite with:
 
 ```bash
 ./mvnw clean verify
 ```
 
-On Windows:
+Windows:
 
 ```powershell
 .\mvnw.cmd clean verify
@@ -295,27 +293,58 @@ On Windows:
 
 The test suite covers:
 
-- request validation
-- controller behavior
-- domain mapping
+- request validation and invalid input handling
+- controller behaviour and HTTP responses
+- DTO-to-domain configuration mapping
+- default configuration values
 - service orchestration
-- properties formatting
-- YAML formatting
-- integration flow
+- `.properties` generation
+- YAML structure and generation
+- application integration flow
 
-## CI
+## CI/CD
 
-The GitHub Actions workflow runs on pushes and pull requests to `main`.
+BootForge uses GitHub Actions to automatically validate changes pushed to the repository and changes proposed through pull requests.
 
-It performs:
+The CI pipeline performs:
 
-- Java 21 setup
-- Maven build and verification
-- Docker image build
-- container startup
-- readiness check
-- API smoke test
+1. Java 21 environment setup
+2. Maven build and automated test verification
+3. Docker image build
+4. BootForge container startup
+5. Actuator readiness check
+6. API smoke test against the running container
+7. Container cleanup
 
-## License
+The smoke test sends a real `POST` request to the configuration generation endpoint and verifies that the application returns a successful HTTP response.
 
-No license has been specified yet.
+Deployment is handled through Render's GitHub integration, with the production service deployed from the main branch.
+
+## Deployment
+
+BootForge is deployed to Render as a containerised web service.
+
+Production configuration is supplied through environment variables rather than being hard-coded into the application image. The production Spring profile provides environment-specific application settings.
+
+Deployment flow:
+
+```text
+Push/Merge to main
+        ↓
+GitHub Actions CI
+        ↓
+Build, Test and Container Validation
+        ↓
+Render GitHub Integration
+        ↓
+Production Deployment
+```
+
+The deployed application can be accessed from the live application link at the top of this README.
+
+## Future Improvements
+
+Potential future enhancements include:
+
+- support for additional databases and configuration sections
+- reusable configuration templates
