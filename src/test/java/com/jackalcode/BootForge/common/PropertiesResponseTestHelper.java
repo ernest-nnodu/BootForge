@@ -1,11 +1,12 @@
 package com.jackalcode.BootForge.common;
 
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
+import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.dto.*;
 
 public class PropertiesResponseTestHelper {
 
-    public static String expectedProperties(GenerateConfigRequest request) {
+    public static ConfigResponse expectedProperties(GenerateConfigRequest request) {
 
         StringBuilder properties = new StringBuilder();
 
@@ -17,7 +18,7 @@ public class PropertiesResponseTestHelper {
         appendLoggingProperties(properties, request.loggingConfigRequest());
         appendActuatorProperties(properties, request.actuatorConfigRequest());
 
-        return properties.toString().stripTrailing();
+        return new ConfigResponse(OutputFormat.PROPERTIES, properties.toString().stripTrailing());
     }
 
     private static void appendApplicationProperties(StringBuilder properties, ApplicationConfigRequest application) {

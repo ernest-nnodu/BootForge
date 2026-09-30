@@ -1,45 +1,350 @@
-# BootForge 🔥
+# BootForge
 
-BootForge is a backend-focused Spring Boot configuration generation service designed to help developers quickly create clean, production-ready configuration files.
+BootForge is a Spring Boot configuration generator that creates ready-to-use `application.properties` and `application.yml` configuration content from structured configuration options.
 
-Instead of manually remembering dozens of Spring Boot properties, BootForge allows you to:
+Built as a production-oriented Java backend project, BootForge demonstrates REST API design, input validation, automated testing, containerisation, CI and cloud deployment.
 
-- Generate application.properties or application.yml
+## Live Application
 
-- Configure database, JPA, logging, server, and actuator settings
+BootForge is deployed on Render:
 
-- Apply safe, opinionated defaults
+[Try BootForge](https://bootforge.onrender.com)
 
-- Validate inputs to prevent common misconfigurations
+## Engineering Highlights
 
-- Instantly preview and copy generated configuration
+- Layered Spring Boot architecture separating API, service, mapping, domain, and formatting responsibilities
+- Strategy-based formatting supporting YAML and `.properties` output
+- Jakarta Bean Validation with centralized API exception handling
+- Automated unit, controller, formatter, and integration testing
+- Multi-stage Docker containerisation with Actuator readiness and liveness endpoints
+- GitHub Actions CI with Maven verification, Docker build, container startup, readiness validation, and API smoke testing
 
-BootForge is built with a clean domain-driven design approach and demonstrates:
+## What It Generates
 
-- Strong Java domain modeling
+BootForge can generate configuration for:
 
-- Strategy pattern for output formatting
-
-- Input validation and defensive configuration
-
-- Clean separation of concerns
-
-- Dockerized deployment
-
-## Why BootForge?
-
-Spring Boot applications often require repetitive setup and careful configuration. BootForge streamlines this process by providing a structured, validated way to generate configuration files that follow best practices.
-
-This project focuses on backend engineering principles rather than frontend complexity.
+- application name and active profile
+- server port and context path
+- datasource URL, username, and password
+- PostgreSQL or MySQL database settings
+- JPA and Hibernate settings
+- Hikari connection pool settings
+- logging levels
+- actuator endpoint exposure and health detail visibility
 
 ## Tech Stack
 
-- Java 17+
+- **Backend:** Java 21, Spring Boot 4, Spring Web MVC
+- **Validation:** Jakarta Bean Validation
+- **Configuration:** SnakeYAML
+- **Testing:** JUnit 5, Mockito, MockMvc
+- **Build:** Maven
+- **Containerisation:** Docker, Docker Compose
+- **CI:** GitHub Actions
+- **Observability:** Spring Boot Actuator
+- **Deployment:** Render
 
-- Spring Boot
+## Architecture
 
-- Jakarta Validation
+BootForge uses a layered architecture that separates HTTP concerns, application orchestration, domain configuration, object mapping, and output formatting.
 
-- Bootstrap (minimal UI)
+The request flow is:
 
-- Docker
+`HTTP Request → Controller → Service → Mapper → Domain Model → Formatter → Generated Configuration`
+
+The formatter abstraction allows the service layer to generate different output formats without coupling configuration generation to YAML or `.properties` formatting.
+
+```text
+src/main/java/com/jackalcode/BootForge
+├── controller   # REST API endpoints
+├── domain       # Core configuration models and enums
+├── dto          # Request payload records and validation
+├── exception    # API error responses and global exception handling
+├── formatter    # Properties and YAML output formatters
+├── mapper       # DTO-to-domain mapping
+└── service      # Configuration generation orchestration
+```
+
+## API
+
+BootForge exposes a REST API for generating Spring Boot configuration from a JSON request.
+
+### Endpoint
+
+`POST /api/v1/configurations/generate`
+
+The request defines the required configuration sections and desired output format. The API validates the input, maps it to the internal configuration model, and returns the generated YAML or `.properties` content.
+
+### Example Request
+
+```json
+{
+  "applicationConfigRequest": {
+    "applicationName": "orders-service",
+    "activeProfile": "dev"
+  },
+  "serverConfigRequest": {
+    "port": 8080,
+    "contextPath": "/api"
+  },
+  "databaseConfigRequest": {
+    "databaseType": "POSTGRESQL",
+    "username": "postgres",
+    "password": "password",
+    "host": "localhost",
+    "databaseName": "orders",
+    "port": 5432
+  },
+  "jpaConfigRequest": {
+    "ddlAuto": "NONE",
+    "showSql": false,
+    "openInView": false
+  },
+  "hikariConfigRequest": {
+    "maximumPoolSize": 10,
+    "minimumIdle": 2,
+    "connectionTimeout": 30000
+  },
+  "loggingConfigRequest": {
+    "rootLevel": "INFO",
+    "springLevel": "INFO"
+  },
+  "actuatorConfigRequest": {
+    "exposedEndpoints": "health,info",
+    "showHealthDetails": "NEVER"
+  },
+  "outputFormat": "YAML"
+}
+```
+
+### Example Response
+
+```yaml
+spring:
+  application:
+    name: orders-service
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orders
+    username: postgres
+    password: password
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+```
+
+## Supported Configuration
+
+BootForge currently supports:
+
+- **Output formats:** `PROPERTIES`, `YAML`
+- **Databases:** `POSTGRESQL`, `MYSQL`
+- **JPA DDL modes:** `NONE`, `CREATE`, `UPDATE`, `VALIDATE`
+- **Log levels:** `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`
+
+## Defaults
+
+BootForge applies defaults when optional fields are not provided.
+
+| Setting | Default |
+| --- | --- |
+| Active profile | `default` |
+| Server port | `8080` |
+| Context path | `/` |
+| Database host | `localhost` |
+| Database name | `app_db` |
+| PostgreSQL port | `5432` |
+| MySQL port | `3306` |
+| JPA DDL auto | `NONE` |
+| JPA show SQL | `false` |
+| JPA open-in-view | `false` |
+| Hikari maximum pool size | `10` |
+| Hikari minimum idle | `2` |
+| Hikari connection timeout | `30000` |
+| Root log level | `INFO` |
+| Spring log level | `INFO` |
+| Actuator exposed endpoints | `health,info` |
+| Health details | `NEVER` |
+
+## Validation
+
+BootForge validates incoming requests using Jakarta Bean Validation before configuration generation.
+
+Required configuration includes:
+
+- application configuration
+- server configuration
+- database configuration
+- output format
+- database type, username, and password
+
+Port values must be between `1` and `65535`.
+
+Invalid input returns `400 Bad Request` with a structured error response handled through centralized exception handling.
+
+## Getting Started
+
+### Prerequisites
+
+- Java 21
+- Docker and Docker Compose (for containerised execution)
+
+### Run Locally
+
+macOS/Linux:
+
+```bash
+./mvnw spring-boot:run
+```
+
+On Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+The application starts on port `8080` by default.
+
+### Application Profiles
+
+BootForge provides separate configuration for development and production environments:
+
+- `application-dev.properties`
+- `application-prod.properties`
+
+To run using the production profile:
+
+macOS/Linux:
+
+```bash
+SPRING_PROFILES_ACTIVE=prod ./mvnw spring-boot:run
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:SPRING_PROFILES_ACTIVE = "prod"
+.\mvnw.cmd spring-boot:run
+```
+
+## Health Checks
+
+BootForge uses Spring Boot Actuator to expose application health information for container and deployment monitoring.
+
+Available health endpoints include:
+
+```text
+GET /actuator/health
+GET /actuator/health/liveness
+GET /actuator/health/readiness
+```
+
+The readiness endpoint is used by the CI pipeline to verify that the application is ready to accept requests before the API smoke test is executed.
+
+Liveness and readiness probes also provide health information that can be used by container orchestration and cloud deployment environments.
+
+## Docker
+
+BootForge can be built and run as a Docker container.
+
+### Build the Image
+
+```bash
+docker build -t bootforge:local .
+```
+
+### Run with Docker Compose
+
+```bash
+docker compose up --build
+```
+
+Docker Compose builds the application image, starts the BootForge service, and exposes the application on port `8000`.
+
+Once running, the API is available at:
+
+```text
+http://localhost:8000/api/v1/configurations/generate
+```
+
+Stop the application with:
+
+```bash
+docker compose down
+```
+
+## Testing
+
+BootForge includes automated tests across the controller, service, mapping, formatting, and application integration layers.
+
+Run the complete test suite with:
+
+```bash
+./mvnw clean verify
+```
+
+Windows:
+
+```powershell
+.\mvnw.cmd clean verify
+```
+
+The test suite covers:
+
+- request validation and invalid input handling
+- controller behaviour and HTTP responses
+- DTO-to-domain configuration mapping
+- default configuration values
+- service orchestration
+- `.properties` generation
+- YAML structure and generation
+- application integration flow
+
+## CI/CD
+
+BootForge uses GitHub Actions to automatically validate changes pushed to the repository and changes proposed through pull requests.
+
+The CI pipeline performs:
+
+1. Java 21 environment setup
+2. Maven build and automated test verification
+3. Docker image build
+4. BootForge container startup
+5. Actuator readiness check
+6. API smoke test against the running container
+7. Container cleanup
+
+The smoke test sends a real `POST` request to the configuration generation endpoint and verifies that the application returns a successful HTTP response.
+
+Deployment is handled through Render's GitHub integration, with the production service deployed from the main branch.
+
+## Deployment
+
+BootForge is deployed to Render as a containerised web service.
+
+Production configuration is supplied through environment variables rather than being hard-coded into the application image. The production Spring profile provides environment-specific application settings.
+
+Deployment flow:
+
+```text
+Push/Merge to main
+        ↓
+GitHub Actions CI
+        ↓
+Build, Test and Container Validation
+        ↓
+Render GitHub Integration
+        ↓
+Production Deployment
+```
+
+The deployed application can be accessed from the live application link at the top of this README.
+
+## Future Improvements
+
+Potential future enhancements include:
+
+- support for additional databases and configuration sections
+- reusable configuration templates

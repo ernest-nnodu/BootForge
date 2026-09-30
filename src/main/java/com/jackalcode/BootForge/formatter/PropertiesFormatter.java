@@ -1,12 +1,19 @@
 package com.jackalcode.BootForge.formatter;
 
 import com.jackalcode.BootForge.domain.enums.DatabaseType;
+import com.jackalcode.BootForge.domain.enums.OutputFormat;
 import com.jackalcode.BootForge.domain.model.*;
 import com.jackalcode.BootForge.formatter.util.FormatterUtil;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PropertiesFormatter implements ConfigFormatter {
+
+    @Override
+    public OutputFormat getFormat() {
+
+        return OutputFormat.PROPERTIES;
+    }
 
     @Override
     public String format(Configuration configuration) {

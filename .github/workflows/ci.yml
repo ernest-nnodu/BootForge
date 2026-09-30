@@ -1,12 +1,5 @@
-# This workflow will build a Java project with Maven and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 
-# This workflow uses actions that GitHub does not certify.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: BootForge Build and Test CI
+name: BootForge CI/CD
 
 on:
   push:
@@ -20,12 +13,80 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Set up Java
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+
     - name: Build and test with maven
       run: mvn clean verify
+
+    - name: Build docker image
+      run: docker build -t bootforge-api:${{ github.sha }} .
+
+    - name: Run docker image
+      run: docker run --detach --publish 8000:8000 --env SERVER_PORT=8000 --name bootforge-api bootforge-api:${{ github.sha }}
+
+    - name: Check BootForge API readiness
+      run: |
+        for i in {1..5}; do
+        if curl --fail --silent http://localhost:8000/actuator/health/readiness; then
+        echo "BootForge API is ready"
+        exit 0
+        fi
+        
+        echo "BootForge API is not ready yet. Waiting 10 seconds..."
+        sleep 10
+        done
+        
+        echo "BootForge API failed to start"
+        docker logs bootforge-api
+        exit 1
+
+    - name: API smoke test
+      run: |
+        HTTP_STATUS=$(
+        curl --silent --show-error \
+        --output response.txt \
+        --write-out "%{http_code}" \
+        --request POST \
+        --header "Content-Type: application/json" \
+        --data '{
+        "applicationConfigRequest": {
+          "applicationName": "bootforge"
+        },
+        "serverConfigRequest": {
+          "port": 8000
+        },
+        "databaseConfigRequest": {
+          "databaseType": "POSTGRESQL",
+          "username": "postgres",
+          "password": "password",
+          "port": 5432
+        },
+        "outputFormat": "YAML"
+        }' \
+        http://localhost:8000/api/v1/configurations/generate)
+        
+        echo "HTTP status: $HTTP_STATUS"
+        echo "Response body:"
+        cat response.txt
+
+        if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+          echo "API smoke test failed"
+          echo "Container logs:"
+          docker logs bootforge-api
+          exit 1
+        fi
+
+        echo "API smoke test passed"
+
+    - name: Stop docker image
+      if: always()
+      run: docker rm -f bootforge-api || true
+

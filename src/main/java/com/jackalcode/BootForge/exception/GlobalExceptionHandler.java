@@ -34,6 +34,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiErrorResponse handleException(Exception ex) {
-        return new ApiErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return new ApiErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
     }
 }
