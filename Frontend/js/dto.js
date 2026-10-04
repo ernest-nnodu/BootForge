@@ -1,45 +1,4 @@
 
-const applicationConfigRequest = createApplicationConfigRequest(
-    "BootForge", "dev");
-
-const serverConfigRequest = createServerConfigRequest(8080, "/api");
-
-const databaseProperties = {
-    databaseType: "POSTGRESQL",
-    username: "user",
-    password: "password",
-    host: "localhost",
-    databaseName: "bootforge_db",
-    port: 5432
-};
-
-const databaseConfigRequest = createDatabaseConfigRequest(databaseProperties);
-
-const jpaProperties = {
-    ddlAuto: "update",
-    showSql: true,
-    openInView: true
-};
-
-const jpaConfigRequest = createJpaConfigRequest(jpaProperties);
-
-const hikariConfigRequest = createHikariConfigRequest(10, 2, 30000);
-
-const loggingConfigRequest = createLoggingConfigRequest("INFO", "INFO");
-
-const actuatorConfigRequest = createActuatorConfigRequest("health, info, metrics", "ALWAYS");
-
-const generateConfigRequest = createGenerateConfigRequest(
-    applicationConfigRequest,
-    serverConfigRequest,
-    databaseConfigRequest,
-    jpaConfigRequest,
-    hikariConfigRequest,
-    loggingConfigRequest,
-    actuatorConfigRequest,
-    "YAML"
-);
-
 function createApplicationConfigRequest(applicationName, activeProfile) {
     return {
         applicationName,
@@ -49,35 +8,37 @@ function createApplicationConfigRequest(applicationName, activeProfile) {
 
 function createServerConfigRequest(port, contextPath) {
     return {
-        port,
+        port: Number(port),
         contextPath
     };
 }
 
-function createDatabaseConfigRequest({databaseType, username, password, host, databaseName, port}) {
+function createDatabaseConfigRequest(
+    {databaseType, databaseUsername, databasePassword, databaseHost, databaseName, databasePort}) {
+
     return {
-        databaseType,
-        username,
-        password,
-        host,
-        databaseName,
-        port
+        databaseType: databaseType,
+        username: databaseUsername,
+        password: databasePassword,
+        host: databaseHost,
+        databaseName: databaseName,
+        port: Number(databasePort)
     };
 }
 
 function createJpaConfigRequest({ddlAuto, showSql, openInView}) {
     return {
         ddlAuto,
-        showSql,
-        openInView
+        showSql: Boolean(showSql),
+        openInView: Boolean(openInView),
     };
 }
 
 function createHikariConfigRequest(maximumPoolSize, minimumIdle, connectionTimeout) {
     return {
-        maximumPoolSize,
-        minimumIdle,
-        connectionTimeout
+        maximumPoolSize: Number(maximumPoolSize),
+        minimumIdle: Number(minimumIdle),
+        connectionTimeout: Number(connectionTimeout)
     };
 }
 
@@ -95,15 +56,26 @@ function createActuatorConfigRequest(exposedEndpoints, showHealthDetails) {
     };
 }
 
-function createGenerateConfigRequest(
-    applicationConfigRequest,
-    serverConfigRequest,
-    databaseConfigRequest,
-    jpaConfigRequest,
-    hikariConfigRequest,
-    loggingConfigRequest,
-    actuatorConfigRequest,
-    outputFormat) {
+function createGenerateConfigRequest(configurationProperties) {
+
+    const applicationConfigRequest =
+        createApplicationConfigRequest(configurationProperties.applicationName, configurationProperties.activeProfile);
+
+    const serverConfigRequest =
+        createServerConfigRequest(configurationProperties.serverPort, configurationProperties.contextPath);
+
+    const databaseConfigRequest = createDatabaseConfigRequest(configurationProperties);
+
+    const jpaConfigRequest = createJpaConfigRequest(configurationProperties);
+
+    const hikariConfigRequest = createHikariConfigRequest(10, 2, 30000);
+
+    const loggingConfigRequest = createLoggingConfigRequest("INFO", "INFO");
+
+    const actuatorConfigRequest =
+        createActuatorConfigRequest("health, info, metrics", "ALWAYS");
+
+    const outputFormat = configurationProperties.outputFormat;
 
     return {
         applicationConfigRequest,
@@ -117,6 +89,7 @@ function createGenerateConfigRequest(
     }
 }
 
+export {createGenerateConfigRequest};
 
 
 

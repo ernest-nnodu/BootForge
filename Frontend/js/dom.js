@@ -1,23 +1,25 @@
 
-let projectNameInputField = document.getElementById("project-name");
-let activeProfileInputField = document.getElementById("active-profile");
-let serverPortInputField = document.getElementById("server-port");
-let contextPathInputField = document.getElementById("context-path");
-let databaseTypeSelectField = document.getElementById("database-type");
-let databaseNameInputField = document.getElementById("database-name");
-let databasePortInputField = document.getElementById("database-port");
-let databaseHostInputField = document.getElementById("database-host");
-let databaseUsernameInputField = document.getElementById("database-username");
-let databasePasswordInputField = document.getElementById("database-password");
-let ddlAutoSelectField = document.getElementById("ddl-auto");
-let showSqlSelectField = document.getElementById("show-sql");
-let outputFormatSelectField = document.getElementById("output-format");
-let generatedConfigTextarea = document.getElementById("generated-config");
+const form = document.getElementById("configuration-form");
+const applicationNameInputField = document.getElementById("application-name");
+const activeProfileInputField = document.getElementById("active-profile");
+const serverPortInputField = document.getElementById("server-port");
+const contextPathInputField = document.getElementById("context-path");
+const databaseTypeSelectField = document.getElementById("database-type");
+const databaseNameInputField = document.getElementById("database-name");
+const databasePortInputField = document.getElementById("database-port");
+const databaseHostInputField = document.getElementById("database-host");
+const databaseUsernameInputField = document.getElementById("database-username");
+const databasePasswordInputField = document.getElementById("database-password");
+const ddlAutoSelectField = document.getElementById("ddl-auto");
+const showSqlSelectField = document.getElementById("show-sql");
+const outputFormatSelectField = document.getElementById("output-format");
+const generateConfigButton = document.getElementById("generate-config-btn");
+const generatedConfigTextarea = document.getElementById("generated-config");
 
 function readForm() {
 
     return {
-        projectName: projectNameInputField.value,
+        applicationName: applicationNameInputField.value,
         activeProfile: activeProfileInputField.value,
         serverPort: serverPortInputField.value,
         contextPath: contextPathInputField.value,
@@ -34,9 +36,13 @@ function readForm() {
 }
 
 function displayGeneratedConfig(config) {
-    generatedConfigTextarea.value = config;
+    generatedConfigTextarea.textContent = config;
 }
 
-export {readForm, displayGeneratedConfig};
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+});
+
+export {readForm, displayGeneratedConfig, form, generateConfigButton};
 
 
