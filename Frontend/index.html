@@ -197,14 +197,14 @@
                     <div class="output-format-selector d-flex align-items-center gap-2">
                         <label class="form-label" for="output-format">Format:</label>
                         <select class="form-select" id="output-format">
-                            <option value="application.properties" selected>application.properties</option>
-                            <option value="application.yml">application.yml</option>
+                            <option value="PROPERTIES" selected>application.properties</option>
+                            <option value="YAML">application.yml</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="config-output">
-                    <pre><code id="generated-config"></code></pre>
+                    <pre><code id="generated-config">Generated Configuration will appear here...</code></pre>
                 </div>
 
                 <div class="output-actions d-flex gap-3 mt-1">
@@ -239,6 +239,7 @@
 </script>
 
 <script src="js/dto.js"></script>
+<script src="js/dom.js"></script>
 
 </body>
 </html>
