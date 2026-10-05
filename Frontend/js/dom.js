@@ -1,5 +1,5 @@
 
-const form = document.getElementById("configuration-form");
+const configForm = document.getElementById("configuration-form");
 const applicationNameInputField = document.getElementById("application-name");
 const activeProfileInputField = document.getElementById("active-profile");
 const serverPortInputField = document.getElementById("server-port");
@@ -39,10 +39,6 @@ function displayGeneratedConfig(config) {
     generatedConfigTextarea.textContent = config;
 }
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
-
-export {readForm, displayGeneratedConfig, form, generateConfigButton};
+export {readForm, displayGeneratedConfig, configForm, generateConfigButton};
 
 
