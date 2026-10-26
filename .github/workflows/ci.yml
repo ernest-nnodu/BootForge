@@ -30,7 +30,7 @@ jobs:
       run: docker build -t bootforge-api:${{ github.sha }} .
 
     - name: Run docker image
-      run: docker run --detach --publish 8000:8000 --env SERVER_PORT=8000 --name bootforge-api bootforge-api:${{ github.sha }}
+      run: docker run --detach --publish 8000:8000 --env SERVER_PORT=8000 --env SPRING_PROFILES_ACTIVE=prod --env CORS_ALLOWED_ORIGINS="*" --name bootforge-api bootforge-api:${{ github.sha }}
 
     - name: Check BootForge API readiness
       run: |
