@@ -42,4 +42,15 @@ public class CorsConfigIntegrationTest {
                         .header("Access-Control-Request-Headers", "Content-Type"))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    @DisplayName("Preflight request with invalid method should fail")
+    void preflightRequestWithInvalidMethodShouldFail() throws Exception {
+
+        mockMvc.perform(options("/api/v1/configurations/generate")
+                        .header("Origin", "http://localhost:3000")
+                        .header("Access-Control-Request-Method", "GET")
+                        .header("Access-Control-Request-Headers", "Content-Type"))
+                .andExpect(status().isForbidden());
+    }
 }
