@@ -12,8 +12,9 @@ configForm.addEventListener("submit", (event) => {
     event.preventDefault(); //prevent the default form submission behavior
     const formData = readForm();
     const requestData = createGenerateConfigRequest(formData);
+
     processConfig(requestData)
-        .then((config) => displayGeneratedConfig(config.content))
+        .then((config) => displayGeneratedConfig(config.content, config.format))
         .catch((error) => {
             displayGeneratedConfig(`Error: ${error.message}`);
         })

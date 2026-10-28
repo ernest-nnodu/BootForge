@@ -35,8 +35,15 @@ function readForm() {
     };
 }
 
-function displayGeneratedConfig(config) {
+function displayGeneratedConfig(config, format) {
+
     generatedConfigTextarea.textContent = config;
+
+    if (format !== undefined) {
+        generatedConfigTextarea.className = `language-${format.toLowerCase()}`
+        window.Prism.highlightElement(generatedConfigTextarea);
+    }
+
 }
 
 export {readForm, displayGeneratedConfig, configForm, generateConfigButton};
