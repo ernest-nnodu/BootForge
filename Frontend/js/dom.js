@@ -16,6 +16,7 @@ const outputFormatSelectField = document.getElementById("output-format");
 const generateConfigButton = document.getElementById("generate-config-btn");
 const generatedConfigTextarea = document.getElementById("generated-config");
 const copyToClipboardButton = document.getElementById("copy-btn");
+const downloadButton = document.getElementById("download-btn");
 
 function readForm() {
 
@@ -47,6 +48,13 @@ function displayGeneratedConfig(config, format) {
 
 }
 
-export {readForm, displayGeneratedConfig, configForm, generateConfigButton, copyToClipboardButton};
+export {
+    readForm,
+    displayGeneratedConfig,
+    configForm,
+    generateConfigButton,
+    copyToClipboardButton,
+    downloadButton,
+};
 
 
