@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
+    <!-- Prism CSS for syntax highlighting -->
+    <link href="css/prism.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/index.css">
     <title>BootForge</title>
@@ -37,7 +40,7 @@
                 <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/>
             </svg>
         </button>
-        <a href="https://github.com/BootForge" target="_blank" class="d-flex align-items-center py-0 px-3">
+        <a href="https://github.com/ernest-nnodu/BootForge" target="_blank" class="d-flex align-items-center py-0 px-3">
             Github
         </a>
     </div>
@@ -204,7 +207,7 @@
                 </div>
 
                 <div class="config-output">
-                    <pre><code id="generated-config">Generated Configuration will appear here...</code></pre>
+                    <pre><code id="generated-config">Generated configuration will appear here...</code></pre>
                 </div>
 
                 <div class="output-actions d-flex gap-3 mt-1">
@@ -233,12 +236,16 @@
     <p>© 2026 BootForge. All rights reserved.</p>
 </footer>
 
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous">
 </script>
 
-<script src="js/app.js" type="module"></script>
+<!-- Prism JS for syntax highlighting -->
+<script src="js/prism.js"></script>
+
+<script type="module" src="js/app.js"></script>
 
 </body>
 </html>

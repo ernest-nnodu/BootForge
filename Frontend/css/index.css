@@ -388,7 +388,7 @@ header {
 .config-output pre {
     width: 100%;
     min-height: 800px;
-    max-height: 1000px;
+    max-height: 900px;
 
     margin: 0;
     padding: 16px;
@@ -396,7 +396,7 @@ header {
     overflow: auto;
 
     background-color: #111827;
-    color: #f9fafb;
+    color: #ffffff;
 
     font-family: monospace;
     font-size: 14px;

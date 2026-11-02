@@ -15,6 +15,8 @@ const showSqlSelectField = document.getElementById("show-sql");
 const outputFormatSelectField = document.getElementById("output-format");
 const generateConfigButton = document.getElementById("generate-config-btn");
 const generatedConfigTextarea = document.getElementById("generated-config");
+const copyToClipboardButton = document.getElementById("copy-btn");
+const downloadButton = document.getElementById("download-btn");
 
 function readForm() {
 
@@ -35,10 +37,24 @@ function readForm() {
     };
 }
 
-function displayGeneratedConfig(config) {
+function displayGeneratedConfig(config, format) {
+
     generatedConfigTextarea.textContent = config;
+
+    if (format !== undefined) {
+        generatedConfigTextarea.className = `language-${format.toLowerCase()}`
+        window.Prism.highlightElement(generatedConfigTextarea);
+    }
+
 }
 
-export {readForm, displayGeneratedConfig, configForm, generateConfigButton};
+export {
+    readForm,
+    displayGeneratedConfig,
+    configForm,
+    generateConfigButton,
+    copyToClipboardButton,
+    downloadButton,
+};
 
 
