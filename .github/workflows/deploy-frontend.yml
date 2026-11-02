@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "frontend/**"
+      - "Frontend/**"
       - ".github/workflows/deploy-frontend.yml"
   workflow_dispatch:
 
@@ -36,7 +36,7 @@ jobs:
       - name: Upload frontend
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./frontend
+          path: ./Frontend
 
       - name: Deploy to GitHub Pages
         id: deployment
