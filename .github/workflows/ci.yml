@@ -4,8 +4,31 @@ name: BootForge CI/CD
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "src/**"
+      - ".dockerignore"
+      - "Dockerfile"
+      - "docker-compose.yml"
+      - "mvnw"
+      - "mvnw.cmd"
+      - ".mvn/**"
+      - "pom.xml"
+      - ".github/workflows/ci.yml"
+
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "src/**"
+      - ".dockerignore"
+      - "Dockerfile"
+      - "docker-compose.yml"
+      - "mvnw"
+      - "mvnw.cmd"
+      - ".mvn/**"
+      - "pom.xml"
+      - ".github/workflows/ci.yml"
+
+  workflow_dispatch:
 
 jobs:
   build:
