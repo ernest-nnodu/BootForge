@@ -1,10 +1,11 @@
 
 async function generateConfiguration(requestData) {
 
-    const url = "http://localhost:8000/api/v1/configurations/generate";
+    const API_BASE_URL = "https://bootforge.onrender.com"
+    const API_URL = `${API_BASE_URL}/api/v1/configurations/generate`;
     const body = JSON.stringify(requestData);
 
-    const response = await fetch(url, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
